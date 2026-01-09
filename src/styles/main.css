@@ -1,0 +1,156 @@
+/* main.css - Main App Styles */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Main Content */
+.main-content {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+/* Footer */
+.footer {
+  background: linear-gradient(
+    150deg,
+    rgba(11, 21, 45, 0.9) 0%,
+    rgba(15, 31, 58, 0.9) 45%,
+    rgba(20, 38, 71, 0.9) 100%
+  );
+  border-top: none;
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+  animation: fadeIn 0.8s ease-in-out;
+  position: relative;
+  z-index: 10;
+  letter-spacing: 0.3px;
+  line-height: 1.65;
+}
+
+.footer p {
+  margin: 0;
+  transition: color 0.3s ease;
+  font-weight: 400;
+}
+
+.footer:hover p {
+  color: #b0b8cc;
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .badge-container {
+    width: 200px;
+    height: 280px;
+    z-index: 500;
+  }
+
+  .main-content {
+    padding-left: 0;
+  }
+
+  .footer {
+    padding: 1.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .badge-container {
+    width: 150px;
+    height: 210px;
+  }
+
+  .footer {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Selection Styling */
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Link Styling */
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

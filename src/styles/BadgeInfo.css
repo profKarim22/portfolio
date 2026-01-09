@@ -1,0 +1,123 @@
+/* BadgeInfo.css */
+
+.badge-info {
+  position: fixed;
+  top: 65px;
+  left: 20px;
+  width: 280px;
+  z-index: 901;
+  pointer-events: auto;
+  font-size: 0.75rem;
+  animation: badgeInfoSlideIn 0.8s ease-out;
+}
+
+@keyframes badgeInfoSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.badge-info-section {
+  margin-bottom: 0.5rem;
+  animation: slideInUp 0.8s ease-out both;
+}
+
+.badge-info-section.name {
+  animation-delay: 0.2s;
+}
+
+.badge-info-section.contacts {
+  animation-delay: 0.3s;
+}
+
+.badge-info-section.skills {
+  animation-delay: 0.4s;
+}
+
+.badge-info-section h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.badge-info-section.contacts {
+  display: flex;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.badge-info-section.contacts a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(30, 136, 229, 0.2);
+  border: 1px solid rgba(30, 136, 229, 0.4);
+  border-radius: 50%;
+  color: #64b5f6;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.badge-info-section.contacts a:hover {
+  background: rgba(30, 136, 229, 0.4);
+  border-color: rgba(30, 136, 229, 0.6);
+  color: #bbdefb;
+  transform: scale(1.1);
+}
+
+.badge-info-section.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.badge-info-section.skills span {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  background: rgba(30, 136, 229, 0.15);
+  border: 1px solid rgba(30, 136, 229, 0.3);
+  border-radius: 12px;
+  color: #64b5f6;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.badge-info-section.skills span:hover {
+  background: rgba(30, 136, 229, 0.25);
+  border-color: rgba(30, 136, 229, 0.5);
+  color: #bbdefb;
+}
+
+/* Hide on desktop when not on hero */
+@media (max-width: 768px) {
+  .badge-info {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin-top: 1rem;
+    animation: none;
+  }
+
+  .badge-info-section {
+    animation: none;
+  }
+
+  .badge-info-section.contacts a {
+    pointer-events: all;
+  }
+}

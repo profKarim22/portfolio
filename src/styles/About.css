@@ -1,0 +1,226 @@
+/* =========================
+   About Section
+========================= */
+
+.about-section {
+  padding: 5rem 1.5rem;
+  background: transparent;
+  animation: fadeInSection 0.8s ease-out;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================
+   Section Title
+========================= */
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  letter-spacing: -1px;
+  animation: slideUpFade 0.8s ease-out;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   Skills Section
+========================= */
+
+.skills-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+.skills-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: -0.5px;
+}
+
+/* =========================
+   Skills Grid
+========================= */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.skill-card-rotating {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+
+  padding: 1.6rem 1rem;
+
+  background: rgba(123, 223, 242, 0.05);
+  border: 2px solid rgba(123, 223, 242, 0.15);
+  border-radius: 14px;
+
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.skill-card-rotating::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(123, 223, 242, 0.25),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.skill-card-rotating:hover::before {
+  left: 100%;
+}
+
+.skill-card-rotating:hover {
+  transform: translateY(-10px);
+  background: rgba(123, 223, 242, 0.12);
+  border-color: rgba(123, 223, 242, 0.4);
+  box-shadow: 0 25px 60px rgba(123, 223, 242, 0.15);
+}
+
+/* =========================
+   Skill Icon
+========================= */
+
+.skill-icon-rotating {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: rgba(123, 223, 242, 0.08);
+  border: 2px solid rgba(123, 223, 242, 0.2);
+
+  font-size: 1.6rem;
+  color: #7bdff2;
+
+  transition: all 0.3s ease;
+}
+
+@keyframes rotateIconOnce {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.skill-card-rotating:hover .skill-icon-rotating {
+  animation: rotateIconOnce 0.6s ease-in-out;
+  box-shadow: 0 0 20px rgba(123, 223, 242, 0.35);
+}
+
+/* =========================
+   Skill Name
+========================= */
+
+.skill-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #b0b8cc;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.skill-card-rotating:hover .skill-name {
+  color: #7bdff2;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1024px) {
+  .section-title {
+    font-size: 2.4rem;
+  }
+
+  .about-text {
+    padding: 2.2rem 2.4rem;
+  }
+
+  .about-text-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .skills-title {
+    font-size: 1.9rem;
+  }
+
+  .about-text {
+    padding: 1.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .about-text {
+    padding: 1.6rem;
+  }
+
+  .skill-icon-rotating {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+
+  .skill-name {
+    font-size: 0.8rem;
+  }
+}
