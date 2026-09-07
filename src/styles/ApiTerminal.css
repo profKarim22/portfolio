@@ -1,0 +1,357 @@
+@import "./variables.css";
+
+/* ==========================================================================
+   Sleek & Lightweight API Explorer / Terminal Styles (Bloat-Free)
+   ========================================================================== */
+
+.terminal-section {
+  padding: 4rem 1.5rem;
+  position: relative;
+  background: radial-gradient(
+      ellipse 70% 40% at 50% -10%,
+      rgba(56, 189, 248, 0.05),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 80% 60%,
+      rgba(129, 140, 248, 0.04),
+      transparent 55%
+    );
+}
+
+.terminal-container {
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+/* ── Section Header ── */
+.terminal-header-wrap {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.terminal-badge {
+  display: inline-block;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  color: #38bdf8;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 0.25rem 0.85rem;
+  border-radius: 9999px;
+  margin-bottom: 0.6rem;
+}
+
+.terminal-title-main {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.terminal-subtitle {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* ── Main Terminal Box ── */
+.api-terminal-box {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  width: 100%;
+  background: rgba(7, 11, 20, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px -12px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+/* ── Left Sidebar: Minimalist Route Buttons ── */
+.api-sidebar {
+  background: rgba(4, 7, 16, 0.96);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.75rem;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.sidebar-routes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.api-route-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.76rem;
+  color: #94a3b8;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.api-route-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.api-route-btn.active {
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+  font-weight: 600;
+}
+
+.route-name {
+  font-weight: 600;
+}
+
+.route-status {
+  font-size: 0.64rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.api-route-btn.active .route-status {
+  color: #34d399;
+}
+
+/* ── Right Terminal Area ── */
+.api-console {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ── Terminal Window Header ── */
+.console-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background: rgba(10, 15, 29, 0.98);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  box-sizing: border-box;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.window-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.host-label {
+  color: #64748b;
+  font-size: 0.72rem;
+  letter-spacing: 0.3px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.btn-copy-json {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-copy-json:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #ffffff;
+}
+
+.btn-copy-json.copied {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #34d399;
+}
+
+.copy-icon {
+  font-size: 0.68rem;
+}
+
+/* ── cURL Command Bar ── */
+.curl-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  background: rgba(6, 9, 19, 0.98);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  color: #38bdf8;
+  overflow-x: auto;
+  white-space: nowrap;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+.curl-dollar {
+  color: #34d399;
+  font-weight: 700;
+  user-select: none;
+}
+
+.curl-command {
+  color: #38bdf8;
+}
+
+/* ── Compact Response Body ── */
+.console-body {
+  padding: 1rem 1.25rem;
+  background: rgba(4, 7, 15, 0.98);
+  max-height: 340px;
+  overflow-x: auto;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.json-pre {
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  line-height: 1.62;
+  color: #cbd5e1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── JSON Syntax Highlighting Tokens ── */
+.token-key {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.token-colon {
+  color: #64748b;
+  margin-right: 0.35rem;
+}
+
+.token-string {
+  color: #34d399;
+}
+
+.token-number {
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+.token-bool {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.token-null {
+  color: #f43f5e;
+  font-style: italic;
+}
+
+/* ── Responsive Mobile & Tablet Adaptations ── */
+@media (max-width: 768px) {
+  .api-terminal-box {
+    grid-template-columns: 1fr;
+  }
+
+  .api-sidebar {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.5rem;
+  }
+
+  .sidebar-routes {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .api-route-btn {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .route-status {
+    display: none;
+  }
+
+  .console-body {
+    max-height: 300px;
+  }
+}

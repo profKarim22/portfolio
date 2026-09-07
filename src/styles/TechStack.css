@@ -1,0 +1,280 @@
+@import "./variables.css";
+
+/* ========================================
+   Executive Tech Stack / Skills Styles
+   ======================================== */
+
+.techstack-section {
+  position: relative;
+  background: radial-gradient(
+      circle at 10% 20%,
+      rgba(56, 189, 248, 0.04),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(129, 140, 248, 0.04),
+      transparent 38%
+    );
+}
+
+.tier-header {
+  margin-bottom: 1.35rem;
+}
+
+.tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.tier-pill.primary-tier {
+  background: rgba(56, 189, 248, 0.09);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.12);
+}
+
+.tier-star {
+  color: #fbbf24;
+}
+
+.tier-pill.supporting-tier {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+/* ── Primary Specializations Grid ── */
+.specializations-wrapper {
+  margin-bottom: 3.5rem;
+}
+
+.primary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.primary-card {
+  padding: 2rem;
+  position: relative;
+  border: 1px solid var(--border-glass);
+  background: linear-gradient(
+    145deg,
+    rgba(14, 22, 42, 0.88) 0%,
+    rgba(8, 14, 28, 0.94) 100%
+  );
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.65),
+    0 0 20px -4px var(--card-accent);
+  transition: transform 0.28s var(--ease-out-expo), box-shadow 0.28s ease;
+}
+
+.primary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 42px -6px rgba(0, 0, 0, 0.75),
+    0 0 28px -4px var(--card-accent);
+}
+
+.primary-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  margin-bottom: 0.9rem;
+}
+
+.primary-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.65rem;
+  color: var(--card-accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 14px -2px var(--card-accent);
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.2rem;
+}
+
+.primary-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  background: var(--card-accent);
+  color: #03060c;
+  padding: 0.14rem 0.55rem;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.primary-tagline {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.primary-card-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.primary-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.45rem;
+}
+
+/* ── Skills Badges Container ── */
+.skills-badge-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.72rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.skill-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+/* ── Primary Pill Styles ── */
+.primary-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.primary-card:hover .primary-pill {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.primary-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+/* ── Supporting Grid ── */
+.supporting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.4rem;
+}
+
+.supporting-card {
+  padding: 1.5rem;
+  transition: transform 0.28s var(--ease-out-expo),
+    border-color 0.28s ease, box-shadow 0.28s ease;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+}
+
+.supporting-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cat-accent);
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.5);
+}
+
+.supporting-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.supporting-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  color: var(--cat-accent);
+  flex-shrink: 0;
+}
+
+.supporting-type {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--cat-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 600;
+  display: block;
+}
+
+.supporting-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.supporting-pill {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.supporting-pill:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  border-color: var(--cat-accent);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
+  .primary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .primary-card {
+    padding: 1.4rem;
+  }
+  .primary-card-title {
+    font-size: 1.25rem;
+  }
+  .supporting-grid {
+    grid-template-columns: 1fr;
+  }
+}

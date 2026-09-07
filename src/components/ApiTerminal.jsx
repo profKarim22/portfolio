@@ -1,0 +1,214 @@
+import React, { useState, useMemo } from "react";
+import { FaCopy, FaCheck } from "react-icons/fa";
+import "../styles/ApiTerminal.css";
+
+// ============================================================================
+// 1. CLEAN READ-ONLY DATASETS (All Lightweight GET)
+// ============================================================================
+const ENDPOINTS = {
+  profile: {
+    name: "Karim Abbas Elashiry",
+    role: "Backend Developer & UI/UX Designer",
+    focus: [
+      "High-Throughput APIs",
+      "Distributed Microservices",
+      "Database Architecture & ACID Persistence"
+    ],
+    location: "Cairo, Egypt // Available Worldwide (Remote / Relocation)",
+    status: "Available for High-Impact Engineering Roles",
+    clearance: "LEVEL 04 // ROOT ACCESS",
+    contact: {
+      email: "profkvrim@gmail.com",
+      github: "https://github.com/profKarim22",
+      linkedin: "https://www.linkedin.com/in/karim-abbas-el-ashiry-7a5a51361/",
+      whatsapp: "+201050400641"
+    }
+  },
+  skills: {
+    backend: [
+      "Node.js",
+      "Express.js",
+      "TypeScript",
+      "RESTful APIs",
+      "Socket.IO",
+      "MVC Architecture"
+    ],
+    databases: [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis Caching",
+      "Prisma ORM"
+    ],
+    tools_and_devops: [
+      "Docker Containers",
+      "Flutter & Dart",
+      "Figma Design Tokens",
+      "Git & CI/CD Pipelines"
+    ]
+  },
+  projects: [
+    {
+      name: "Distributed Microservices Engine",
+      throughput: "850+ req/sec",
+      latency: "<55ms p99",
+      db: "PostgreSQL + Redis"
+    },
+    {
+      name: "Real-Time Telemetry Gateway",
+      clients: "10,000 concurrent sockets",
+      stack: "WebSockets + Redis Pub/Sub"
+    },
+    {
+      name: "Enterprise Auth Sentinel",
+      security: "Argon2 + JWT Rotation",
+      coverage: "100% RBAC Test Coverage"
+    }
+  ],
+  status: {
+    server: "Live Operational",
+    region: "Global Edge (Frankfurt / Caddy Reverse-Proxy)",
+    uptime: "99.98%",
+    http_protocol: "HTTP/2",
+    timestamp: new Date().toISOString()
+  }
+};
+
+// ============================================================================
+// 2. EMBEDDED ZERO-DEPENDENCY JSON SYNTAX HIGHLIGHTER
+// ============================================================================
+function highlightJSON(obj) {
+  const jsonString = JSON.stringify(obj, null, 2);
+  return jsonString.replace(
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    (match) => {
+      let cls = "token-string";
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = "token-key";
+          return `<span class="${cls}">${match.slice(0, -1)}</span><span class="token-colon">:</span>`;
+        }
+      } else if (/true|false/.test(match)) {
+        cls = "token-bool";
+      } else if (/null/.test(match)) {
+        cls = "token-null";
+      } else {
+        cls = "token-number";
+      }
+      return `<span class="${cls}">${match}</span>`;
+    }
+  );
+}
+
+// ============================================================================
+// 3. SLEEK & STREAMLINED API EXPLORER / TERMINAL COMPONENT
+// ============================================================================
+export default function ApiTerminal() {
+  const [activeRoute, setActiveRoute] = useState("profile");
+  const [copied, setCopied] = useState(false);
+
+  const activeData = useMemo(() => ENDPOINTS[activeRoute] || ENDPOINTS.profile, [activeRoute]);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(JSON.stringify(activeData, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <section className="terminal-section" id="terminal">
+      <div className="terminal-container">
+        {/* Section Header */}
+        <div className="terminal-header-wrap">
+          <span className="terminal-badge">// REST API Showcase</span>
+          <h2 className="terminal-title-main">
+            Live <span className="text-gradient">API Console</span>
+          </h2>
+          <p className="terminal-subtitle">
+            Inspect simulated backend responses in real time. Sleek, lightweight, and read-only.
+          </p>
+        </div>
+
+        {/* Main Terminal Box */}
+        <div className="api-terminal-box">
+          {/* Left Sidebar: Minimalist Route Buttons */}
+          <aside className="api-sidebar">
+            <div className="sidebar-routes">
+              {Object.keys(ENDPOINTS).map((route) => {
+                const isActive = activeRoute === route;
+                return (
+                  <button
+                    key={route}
+                    onClick={() => setActiveRoute(route)}
+                    className={`api-route-btn ${isActive ? "active" : ""}`}
+                  >
+                    <span className="route-name">GET /{route}</span>
+                    <span className="route-status">200 OK</span>
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
+
+          {/* Right Terminal Area */}
+          <main className="api-console">
+            {/* Terminal Window Header */}
+            <div className="console-header">
+              <div className="header-left">
+                <div className="window-dots">
+                  <span className="dot dot-red" />
+                  <span className="dot dot-yellow" />
+                  <span className="dot dot-green" />
+                </div>
+                <span className="host-label">karim-api // zsh</span>
+              </div>
+
+              <div className="header-right">
+                <span className="status-pill">
+                  <span className="status-dot" />
+                  200 OK
+                </span>
+                <button
+                  onClick={handleCopy}
+                  className={`btn-copy-json ${copied ? "copied" : ""}`}
+                  title="Copy formatted JSON to clipboard"
+                >
+                  {copied ? (
+                    <>
+                      <FaCheck className="copy-icon" /> Copied!
+                    </>
+                  ) : (
+                    <>
+                      <FaCopy className="copy-icon" /> Copy JSON
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* cURL Command Prompt Bar */}
+            <div className="curl-bar">
+              <span className="curl-dollar">$</span>
+              <span className="curl-command">
+                curl -s https://karim.dev/api/v1/{activeRoute}
+              </span>
+            </div>
+
+            {/* Compact Response Body */}
+            <div className="console-body">
+              <pre
+                className="json-pre"
+                dangerouslySetInnerHTML={{
+                  __html: highlightJSON(activeData),
+                }}
+              />
+            </div>
+          </main>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Named alias export for compatibility
+export { ApiTerminal as ApiExplorer };

@@ -1,17 +1,18 @@
 import React from "react";
+import "../styles/Footer.css";
 
-function Footer() {
+export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <p>
+        <p className="footer-main">
+          Architected with precision. Built with React & Three.js.
+        </p>
+        <p className="footer-copy">
           &copy; {new Date().getFullYear()} Karim Abbas Elashiry. All rights
           reserved.
         </p>
-        <p>Built with React, Three.js & ❤️</p>
       </div>
     </footer>
   );
 }
-
-export default Footer;

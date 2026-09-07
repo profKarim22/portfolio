@@ -1,0 +1,404 @@
+@import "./variables.css";
+
+/* ========================================
+   Executive Home / Hero Styles
+   ======================================== */
+
+.home-section,
+.hero-section {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 70px 0 0 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(
+      circle at 25% 25%,
+      rgba(56, 189, 248, 0.07),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 75% 15%,
+      rgba(129, 140, 248, 0.05),
+      transparent 36%
+    ),
+    linear-gradient(160deg, #03060c 0%, #060913 45%, #090f1f 100%);
+}
+
+/* ── Atmospheric Background Layers ── */
+.home-background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.halo {
+  position: absolute;
+  width: 38vw;
+  height: 38vw;
+  max-width: 650px;
+  max-height: 650px;
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.halo-1 {
+  top: -10%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.28), transparent 55%);
+}
+
+.halo-2 {
+  bottom: -15%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.24), transparent 55%);
+}
+
+.halo-3 {
+  top: 25%;
+  right: 28%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.16), transparent 50%);
+}
+
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 180px 180px;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.3) 80%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.3) 80%,
+    transparent 100%
+  );
+  opacity: 0.25;
+}
+
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  animation: starDrift 28s ease-in-out infinite alternate;
+}
+
+.stars-primary {
+  box-shadow:
+    120px 80px rgba(255, 255, 255, 0.8),
+    420px 160px rgba(255, 255, 255, 0.85),
+    720px 120px rgba(255, 255, 255, 0.75),
+    1020px 240px rgba(255, 255, 255, 0.9),
+    1350px 180px rgba(255, 255, 255, 0.65),
+    260px 400px rgba(255, 255, 255, 0.85),
+    560px 520px rgba(255, 255, 255, 0.78),
+    860px 430px rgba(255, 255, 255, 0.85),
+    1180px 520px rgba(255, 255, 255, 0.72),
+    320px 720px rgba(255, 255, 255, 0.8),
+    640px 760px rgba(255, 255, 255, 0.88),
+    980px 680px rgba(255, 255, 255, 0.82);
+  opacity: 0.75;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
+}
+
+.stars-secondary {
+  box-shadow:
+    200px 200px rgba(255, 255, 255, 0.3),
+    520px 280px rgba(255, 255, 255, 0.25),
+    840px 220px rgba(255, 255, 255, 0.32),
+    1120px 320px rgba(255, 255, 255, 0.28),
+    280px 560px rgba(255, 255, 255, 0.3),
+    600px 640px rgba(255, 255, 255, 0.28),
+    920px 540px rgba(255, 255, 255, 0.32),
+    1240px 600px rgba(255, 255, 255, 0.27);
+  opacity: 0.55;
+  animation-duration: 36s;
+  animation-direction: alternate-reverse;
+}
+
+/* ── Hero Full-Bleed Layout (Left 3D Arena | Far-Right Bio Card) ── */
+.hero-badge-viewport-arena {
+  position: absolute;
+  left: 0;
+  top: 70px;
+  width: 58vw;
+  height: calc(100vh - 70px);
+  z-index: 1;
+  overflow: visible !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: visible !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 3rem 0 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: calc(100vh - 70px);
+  pointer-events: none;
+}
+
+.hero-bio-col,
+.hero-content,
+.home-content-col {
+  width: 100%;
+  max-width: 630px;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  animation: fadeInUp 0.75s var(--ease-out-expo) 0.1s both;
+}
+
+/* ── Bio Card ── */
+.home-text {
+  width: 100%;
+  padding: 1.85rem 2.2rem;
+  border-radius: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-glass);
+  background: rgba(56, 189, 248, 0.06);
+  color: var(--accent-cyan);
+  font-size: 0.78rem;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.home-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  line-height: 1.16;
+  letter-spacing: -0.7px;
+}
+
+.home-title .highlight {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.home-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.2px;
+}
+
+.home-intro-text {
+  font-size: 0.96rem;
+  color: var(--text-secondary);
+  line-height: 1.68;
+  margin-bottom: 1.35rem;
+}
+
+/* ── Hero Terminal Snippet ── */
+.terminal-snippet {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1.6rem;
+  border: 1px solid var(--border-glass);
+  background: rgba(6, 10, 20, 0.92);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.55rem 0.95rem;
+  background: rgba(255, 255, 255, 0.035);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.terminal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.terminal-dot.red { background: #ef4444; }
+.terminal-dot.yellow { background: #f59e0b; }
+.terminal-dot.green { background: #10b981; }
+
+.terminal-title {
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.terminal-body {
+  padding: 0.95rem 1.15rem;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.terminal-body code {
+  font-family: var(--font-mono);
+}
+
+.t-prompt { color: var(--accent-emerald); }
+.t-cmd { color: var(--accent-cyan); }
+.t-flag { color: var(--accent-violet); }
+.t-url { color: var(--accent-amber); text-decoration: underline; text-underline-offset: 2px; }
+.t-response { color: var(--text-muted); }
+.t-key { color: var(--accent-cyan); }
+.t-string { color: var(--accent-emerald); }
+
+/* ── Buttons & Pills ── */
+.home-buttons {
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 0;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.35rem;
+  animation: fadeInUp 0.75s var(--ease-out-expo) 0.3s both;
+}
+
+/* ── Responsive Adaptations ── */
+@media (max-width: 1024px) {
+  .home-section,
+  .hero-section {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 70px 1rem 2rem 1rem;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-badge-viewport-arena {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 540px;
+    height: 520px;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  .hero-content-container {
+    height: auto;
+    padding: 0;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  .hero-bio-col,
+  .hero-content,
+  .home-content-col {
+    max-width: 630px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2.1rem;
+  }
+
+  .home-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .pill-row {
+    justify-content: flex-start;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .terminal-snippet {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .badge-canvas-container {
+    height: 480px;
+  }
+
+  .home-title {
+    font-size: 1.7rem;
+  }
+
+  .home-text {
+    padding: 1.35rem 1.15rem;
+  }
+}
