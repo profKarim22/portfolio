@@ -7,6 +7,8 @@ import Projects from "./components/Projects";
 import ApiTerminal from "./components/ApiTerminal";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import AdminAuthModal from "./components/AdminAuthModal";
+import AdminDashboard from "./components/AdminDashboard";
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <AdminAuthModal />
+      <AdminDashboard />
     </div>
   );
 }

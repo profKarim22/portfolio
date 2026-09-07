@@ -680,6 +680,7 @@ export default function Badge3D() {
         alignItems: "center",
         justifyContent: "center",
         userSelect: "none",
+        touchAction: "pan-y",
         cursor: isDraggingState ? "grabbing" : "grab",
       }}
     >
@@ -701,6 +702,7 @@ export default function Badge3D() {
           background: "transparent",
           overflow: "visible",
           pointerEvents: "auto",
+          touchAction: "pan-y",
         }}
       >
         <BadgeScene

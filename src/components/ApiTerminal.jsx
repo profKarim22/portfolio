@@ -1,81 +1,10 @@
 import React, { useState, useMemo } from "react";
 import { FaCopy, FaCheck } from "react-icons/fa";
+import { usePortfolio } from "../context/PortfolioContext";
 import "../styles/ApiTerminal.css";
 
 // ============================================================================
-// 1. CLEAN READ-ONLY DATASETS (All Lightweight GET)
-// ============================================================================
-const ENDPOINTS = {
-  profile: {
-    name: "Karim Abbas Elashiry",
-    role: "Backend Developer & UI/UX Designer",
-    focus: [
-      "High-Throughput APIs",
-      "Distributed Microservices",
-      "Database Architecture & ACID Persistence"
-    ],
-    location: "Cairo, Egypt // Available Worldwide (Remote / Relocation)",
-    status: "Available for High-Impact Engineering Roles",
-    clearance: "LEVEL 04 // ROOT ACCESS",
-    contact: {
-      email: "profkvrim@gmail.com",
-      github: "https://github.com/profKarim22",
-      linkedin: "https://www.linkedin.com/in/karim-abbas-el-ashiry-7a5a51361/",
-      whatsapp: "+201050400641"
-    }
-  },
-  skills: {
-    backend: [
-      "Node.js",
-      "Express.js",
-      "TypeScript",
-      "RESTful APIs",
-      "Socket.IO",
-      "MVC Architecture"
-    ],
-    databases: [
-      "PostgreSQL",
-      "MySQL",
-      "MongoDB",
-      "Redis Caching",
-      "Prisma ORM"
-    ],
-    tools_and_devops: [
-      "Docker Containers",
-      "Flutter & Dart",
-      "Figma Design Tokens",
-      "Git & CI/CD Pipelines"
-    ]
-  },
-  projects: [
-    {
-      name: "Distributed Microservices Engine",
-      throughput: "850+ req/sec",
-      latency: "<55ms p99",
-      db: "PostgreSQL + Redis"
-    },
-    {
-      name: "Real-Time Telemetry Gateway",
-      clients: "10,000 concurrent sockets",
-      stack: "WebSockets + Redis Pub/Sub"
-    },
-    {
-      name: "Enterprise Auth Sentinel",
-      security: "Argon2 + JWT Rotation",
-      coverage: "100% RBAC Test Coverage"
-    }
-  ],
-  status: {
-    server: "Live Operational",
-    region: "Global Edge (Frankfurt / Caddy Reverse-Proxy)",
-    uptime: "99.98%",
-    http_protocol: "HTTP/2",
-    timestamp: new Date().toISOString()
-  }
-};
-
-// ============================================================================
-// 2. EMBEDDED ZERO-DEPENDENCY JSON SYNTAX HIGHLIGHTER
+// 1. EMBEDDED ZERO-DEPENDENCY JSON SYNTAX HIGHLIGHTER
 // ============================================================================
 function highlightJSON(obj) {
   const jsonString = JSON.stringify(obj, null, 2);
@@ -101,13 +30,26 @@ function highlightJSON(obj) {
 }
 
 // ============================================================================
-// 3. SLEEK & STREAMLINED API EXPLORER / TERMINAL COMPONENT
+// 2. SLEEK & STREAMLINED API EXPLORER / TERMINAL COMPONENT
 // ============================================================================
 export default function ApiTerminal() {
+  const { portfolioData } = usePortfolio();
   const [activeRoute, setActiveRoute] = useState("profile");
   const [copied, setCopied] = useState(false);
 
-  const activeData = useMemo(() => ENDPOINTS[activeRoute] || ENDPOINTS.profile, [activeRoute]);
+  // Build endpoints from context data, inject live timestamp for status
+  const ENDPOINTS = useMemo(() => {
+    const endpoints = { ...(portfolioData?.apiEndpoints || {}) };
+    if (endpoints.status) {
+      endpoints.status = {
+        ...endpoints.status,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    return endpoints;
+  }, [portfolioData?.apiEndpoints]);
+
+  const activeData = useMemo(() => ENDPOINTS[activeRoute] || ENDPOINTS.profile, [activeRoute, ENDPOINTS]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(activeData, null, 2));

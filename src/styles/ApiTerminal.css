@@ -65,6 +65,7 @@
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);
   width: 100%;
+  min-width: 0;
   background: rgba(7, 11, 20, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
@@ -324,9 +325,9 @@
 }
 
 /* ── Responsive Mobile & Tablet Adaptations ── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .api-terminal-box {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .api-sidebar {
@@ -339,6 +340,7 @@
     flex-direction: row;
     overflow-x: auto;
     padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
   }
 
   .api-route-btn {
@@ -349,6 +351,11 @@
 
   .route-status {
     display: none;
+  }
+
+  .curl-bar {
+    white-space: pre-wrap;
+    word-break: break-all;
   }
 
   .console-body {

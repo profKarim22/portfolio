@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { usePortfolio } from "../context/PortfolioContext";
 import "../styles/NavBar.css";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { setIsAuthOpen, portfolioData } = usePortfolio();
+
+  const statusConfig = portfolioData?.statusConfig;
+  const currentMode = statusConfig?.modes?.[statusConfig?.mode] || statusConfig?.modes?.available;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +39,11 @@ export default function NavBar() {
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-content">
-        <div className="navbar-logo" onClick={() => scrollToSection("home")}>
+        <div
+          className="navbar-logo"
+          onClick={() => setIsAuthOpen(true)}
+          title="Admin Access"
+        >
           <span className="logo-bracket">&lt;</span>
           <span className="logo-text">Karim</span>
           <span className="logo-dot">.</span>
@@ -48,9 +57,23 @@ export default function NavBar() {
               {item.label}
             </button>
           ))}
-          <div className="status-badge">
-            <span className="status-dot" />
-            <span className="status-text">Open for Opportunities</span>
+          <div
+            className="status-badge"
+            style={{
+              borderColor: currentMode?.borderColor,
+              background: currentMode?.bgColor,
+            }}
+          >
+            <span
+              className="status-dot"
+              style={{ background: currentMode?.color }}
+            />
+            <span
+              className="status-text"
+              style={{ color: currentMode?.color }}
+            >
+              {currentMode?.label}
+            </span>
           </div>
         </div>
 

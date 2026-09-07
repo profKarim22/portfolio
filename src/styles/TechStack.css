@@ -66,6 +66,7 @@
 .primary-card {
   padding: 2rem;
   position: relative;
+  min-width: 0;
   border: 1px solid var(--border-glass);
   background: linear-gradient(
     145deg,
@@ -195,6 +196,7 @@
 
 .supporting-card {
   padding: 1.5rem;
+  min-width: 0;
   transition: transform 0.28s var(--ease-out-expo),
     border-color 0.28s ease, box-shadow 0.28s ease;
   background: var(--bg-surface);

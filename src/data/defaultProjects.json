@@ -1,0 +1,162 @@
+{
+  "projects": [
+    {
+      "id": "event-system",
+      "title": "AI Event Management & Recommendation System",
+      "badge": "Featured Project",
+      "isFeatured": true,
+      "domain": "AI & Event Platform",
+      "domainColor": "#38bdf8",
+      "metrics": [
+        { "label": "Throughput", "value": "850+ req/sec" },
+        { "label": "API Latency", "value": "<45ms" },
+        { "label": "Security", "value": "100% RBAC" }
+      ],
+      "description": "An AI-powered event management and recommendation platform featuring intelligent event recommendations, event discovery, intelligent search, digital ticketing, real-time communication, and B2B event services.",
+      "highlights": [
+        "AI-driven event discovery & personalized recommendation pipeline",
+        "Digital ticketing with secure verification & attendee management",
+        "Real-time communication & live notifications powered by Socket.IO",
+        "Comprehensive B2B event dashboard & services"
+      ],
+      "tech": [
+        "Node.js", "TypeScript", "Express.js", "MySQL", "Prisma ORM",
+        "Python", "FastAPI", "Machine Learning", "NLP", "Socket.IO", "REST API"
+      ],
+      "github": "https://github.com/profKarim22/AI-Event-Management-Recommendation-System",
+      "liveDemo": "https://lightgreen-albatross-650223.hostingersite.com/",
+      "figmaLink": null
+    },
+    {
+      "id": "portfolio-site",
+      "title": "Personal Portfolio",
+      "badge": "Production Web",
+      "isFeatured": false,
+      "domain": "Interactive Frontend & 3D",
+      "domainColor": "#818cf8",
+      "metrics": [
+        { "label": "Framerate", "value": "60 FPS WebGL" },
+        { "label": "Core Web Vitals", "value": "100%" },
+        { "label": "LCP Load", "value": "<0.8s" }
+      ],
+      "description": "A modern developer portfolio website showcasing engineering projects, interactive 3D physics badge, structured technical skill architecture, and interactive API console.",
+      "highlights": [
+        "Interactive 3D ID badge with Rapier physics & React Three Fiber",
+        "Interactive mock REST API console simulating production endpoints",
+        "Fully responsive glassmorphism UI with custom CSS variables design system",
+        "Fast Vite build system with optimized asset delivery"
+      ],
+      "tech": [
+        "React.js", "Three.js", "React Three Fiber", "Rapier Physics",
+        "JavaScript", "CSS3", "Vite"
+      ],
+      "github": "https://github.com/profKarim22/portfolio",
+      "liveDemo": "https://profkarim22.github.io/portfolio/",
+      "figmaLink": null
+    },
+    {
+      "id": "user-greeting",
+      "title": "User Greeting & UI Component System",
+      "badge": "UI/UX & Frontend",
+      "isFeatured": false,
+      "domain": "Design System & Frontend",
+      "domainColor": "#10b981",
+      "metrics": [
+        { "label": "Accessibility", "value": "100% WCAG AA" },
+        { "label": "Type Safety", "value": "Strict TS" },
+        { "label": "Runtime CSS", "value": "0 Overhead" }
+      ],
+      "description": "A component system and user greeting interface built directly from custom Figma specifications into a modern, accessible React and TypeScript component suite.",
+      "highlights": [
+        "Direct translation of Figma design specifications into React components",
+        "Accessible UI primitives built on Radix UI component library",
+        "Type-safe component architecture with TypeScript",
+        "Modular, responsive dashboard widget structure"
+      ],
+      "tech": [
+        "UI/UX Design", "Figma", "React.js", "TypeScript", "Radix UI", "Vite"
+      ],
+      "github": "https://github.com/profKarim22/Usergreetingcopy",
+      "liveDemo": null,
+      "figmaLink": "https://www.figma.com/design/JtPirzr9plI6jisE6a04vK/User-Greeting--Copy-"
+    }
+  ],
+  "apiEndpoints": {
+    "profile": {
+      "name": "Karim Abbas Elashiry",
+      "role": "Backend Developer & UI/UX Designer",
+      "focus": [
+        "High-Throughput APIs",
+        "Distributed Microservices",
+        "Database Architecture & ACID Persistence"
+      ],
+      "location": "Cairo, Egypt // Available Worldwide (Remote / Relocation)",
+      "status": "Available for High-Impact Engineering Roles",
+      "clearance": "LEVEL 04 // ROOT ACCESS",
+      "contact": {
+        "email": "profkvrim@gmail.com",
+        "github": "https://github.com/profKarim22",
+        "linkedin": "https://www.linkedin.com/in/karim-abbas-el-ashiry-7a5a51361/",
+        "whatsapp": "+201050400641"
+      }
+    },
+    "skills": {
+      "backend": [
+        "Node.js", "Express.js", "TypeScript", "RESTful APIs", "Socket.IO", "MVC Architecture"
+      ],
+      "databases": [
+        "PostgreSQL", "MySQL", "MongoDB", "Redis Caching", "Prisma ORM"
+      ],
+      "tools_and_devops": [
+        "Docker Containers", "Flutter & Dart", "Figma Design Tokens", "Git & CI/CD Pipelines"
+      ]
+    },
+    "projects": [
+      {
+        "name": "Distributed Microservices Engine",
+        "throughput": "850+ req/sec",
+        "latency": "<55ms p99",
+        "db": "PostgreSQL + Redis"
+      },
+      {
+        "name": "Real-Time Telemetry Gateway",
+        "clients": "10,000 concurrent sockets",
+        "stack": "WebSockets + Redis Pub/Sub"
+      },
+      {
+        "name": "Enterprise Auth Sentinel",
+        "security": "Argon2 + JWT Rotation",
+        "coverage": "100% RBAC Test Coverage"
+      }
+    ],
+    "status": {
+      "server": "Live Operational",
+      "region": "Global Edge (Frankfurt / Caddy Reverse-Proxy)",
+      "uptime": "99.98%",
+      "http_protocol": "HTTP/2"
+    }
+  },
+  "statusConfig": {
+    "mode": "available",
+    "modes": {
+      "available": {
+        "label": "Open for Opportunities",
+        "color": "#10b981",
+        "borderColor": "rgba(16, 185, 129, 0.25)",
+        "bgColor": "rgba(16, 185, 129, 0.06)"
+      },
+      "committed": {
+        "label": "Committed to Contract",
+        "color": "#f59e0b",
+        "borderColor": "rgba(245, 158, 11, 0.25)",
+        "bgColor": "rgba(245, 158, 11, 0.06)"
+      },
+      "offgrid": {
+        "label": "Off-Grid // Deep Architecture",
+        "color": "#f43f5e",
+        "borderColor": "rgba(244, 63, 94, 0.25)",
+        "bgColor": "rgba(244, 63, 94, 0.06)"
+      }
+    }
+  }
+}

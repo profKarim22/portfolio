@@ -7,16 +7,6 @@ export default function Home() {
     <section
       className="hero-section home-section"
       id="home"
-      style={{
-        minHeight: "100vh",
-        width: "100vw",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "70px 0 0 0", // 0 left/right padding
-        position: "relative",
-        overflow: "hidden",
-      }}
     >
       {/* Atmospheric Background */}
       <div className="home-background">
@@ -28,51 +18,14 @@ export default function Home() {
         <div className="stars-layer stars-secondary" />
       </div>
 
-      {/* 1. Full-Bleed Left 3D Canvas Arena (Touches screen left edge directly) */}
-      <div
-        className="hero-badge-viewport-arena"
-        style={{
-          position: "absolute",
-          left: 0,
-          top: "70px",
-          width: "58vw", // Spans over half the viewport for limitless left drag
-          height: "calc(100vh - 70px)",
-          zIndex: 1,
-          overflow: "visible",
-        }}
-      >
+      {/* 1. Full-Bleed Left 3D Canvas Arena */}
+      <div className="hero-badge-viewport-arena">
         <Badge3D />
       </div>
 
-      {/* 2. Anchored Bio Card Container (Pinned to the Far Right) */}
-      <div
-        className="hero-content-container"
-        style={{
-          position: "relative",
-          zIndex: 2,
-          width: "100%",
-          maxWidth: "1540px",
-          margin: "0 auto",
-          padding: "0 3rem 0 0",
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          height: "calc(100vh - 70px)",
-          pointerEvents: "none", // Allows clicking/dragging through empty left space
-        }}
-      >
-        <div
-          className="hero-bio-col"
-          style={{
-            width: "100%",
-            maxWidth: "640px",
-            pointerEvents: "auto", // Re-enable pointer events for the bio card
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            textAlign: "left",
-          }}
-        >
+      {/* 2. Anchored Bio Card Container */}
+      <div className="hero-content-container">
+        <div className="hero-bio-col">
           <div className="home-text glass-card">
             <div className="eyebrow">
               <span className="eyebrow-dot" />

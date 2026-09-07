@@ -7,7 +7,7 @@
 .home-section,
 .hero-section {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -136,12 +136,14 @@
   left: 0;
   top: 70px;
   width: 58vw;
+  max-width: 100%;
   height: calc(100vh - 70px);
   z-index: 1;
   overflow: visible !important;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
 }
 
 .badge-canvas-container {
@@ -152,6 +154,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
 }
 
 .hero-content-container {
@@ -288,7 +291,8 @@
 
 .terminal-body {
   padding: 0.95rem 1.15rem;
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
   overflow-x: auto;
 }
 
@@ -320,14 +324,17 @@
 }
 
 /* ── Responsive Adaptations ── */
+
+/* --- TABLETS & SMALL LAPTOPS (≤ 1024px) --- */
 @media (max-width: 1024px) {
   .home-section,
   .hero-section {
     flex-direction: column;
     justify-content: flex-start;
-    padding: 70px 1rem 2rem 1rem;
+    padding: 95px 1rem 2rem 1rem;
     height: auto;
     min-height: 100vh;
+    width: 100%;
   }
 
   .hero-badge-viewport-arena {
@@ -335,49 +342,89 @@
     left: auto;
     top: auto;
     width: 100%;
-    max-width: 540px;
-    height: 520px;
+    max-width: 440px;
+    height: 420px;
     margin: 0 auto 1.5rem auto;
+    order: 1;
+  }
+
+  .badge-canvas-container {
+    height: 420px;
+    max-width: 440px;
+    margin: 0 auto;
   }
 
   .hero-content-container {
     height: auto;
-    padding: 0;
+    padding: 0 1rem;
     justify-content: center;
     pointer-events: auto;
+    order: 2;
   }
 
   .hero-bio-col,
   .hero-content,
   .home-content-col {
-    max-width: 630px;
+    max-width: 680px;
     width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+  }
+
+  .home-buttons {
+    justify-content: center;
   }
 }
 
+/* --- MOBILE PHONES (≤ 768px) --- */
 @media (max-width: 768px) {
+  .home-section,
+  .hero-section {
+    padding: 85px 16px 40px;
+  }
+
+  .hero-badge-viewport-arena {
+    height: 330px;
+    max-width: 320px;
+  }
+
+  .badge-canvas-container {
+    height: 330px;
+    max-width: 320px;
+  }
+
   .home-title {
-    font-size: 2.1rem;
+    font-size: clamp(1.85rem, 6vw, 2.6rem) !important;
+    line-height: 1.25 !important;
   }
 
   .home-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.15rem !important;
+  }
+
+  .home-intro-text {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
   }
 
   .home-buttons {
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+    gap: 12px;
   }
 
-  .btn {
+  .home-buttons .btn {
     width: 100%;
     max-width: 100%;
+    padding: 14px;
+    font-size: 0.95rem;
     justify-content: center;
   }
 
   .pill-row {
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .eyebrow {
@@ -389,13 +436,18 @@
   }
 }
 
-@media (max-width: 480px) {
+/* --- SMALL MOBILE PHONES (≤ 420px) --- */
+@media (max-width: 420px) {
+  .hero-badge-viewport-arena {
+    height: 290px;
+  }
+
   .badge-canvas-container {
-    height: 480px;
+    height: 290px;
   }
 
   .home-title {
-    font-size: 1.7rem;
+    font-size: 1.65rem !important;
   }
 
   .home-text {
