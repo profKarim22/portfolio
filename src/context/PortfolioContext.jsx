@@ -4,9 +4,41 @@ import defaultData from '../data/defaultProjects.json';
 const PortfolioContext = createContext();
 
 const STORAGE_KEY = 'karim_portfolio_data';
+const PROJECTS_KEY = 'portfolio_projects';
+
+const defaultProjects = defaultData.projects || [];
+
+export const loadInitialProjects = () => {
+  try {
+    const savedProjects = localStorage.getItem(PROJECTS_KEY);
+    const savedData = localStorage.getItem(STORAGE_KEY);
+
+    let parsed = null;
+    if (savedProjects) {
+      parsed = JSON.parse(savedProjects);
+    } else if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      if (Array.isArray(parsedData?.projects)) {
+        parsed = parsedData.projects;
+      }
+    }
+
+    if (!parsed || !Array.isArray(parsed)) return defaultProjects;
+
+    // Merge strategy: ensure all items from defaultProjects exist in state
+    const savedIds = new Set(parsed.map((p) => p.id));
+    const missingDefaults = defaultProjects.filter((p) => !savedIds.has(p.id));
+
+    return [...missingDefaults, ...parsed];
+  } catch (e) {
+    console.warn("Error parsing saved projects, falling back to defaults", e);
+    return defaultProjects;
+  }
+};
 
 export function PortfolioProvider({ children }) {
   const [portfolioData, setPortfolioData] = useState(() => {
+    const initialProjects = loadInitialProjects();
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -15,6 +47,7 @@ export function PortfolioProvider({ children }) {
         return {
           ...defaultData,
           ...parsed,
+          projects: initialProjects,
           statusConfig: {
             ...defaultData.statusConfig,
             ...(parsed.statusConfig || {}),
@@ -28,7 +61,10 @@ export function PortfolioProvider({ children }) {
     } catch (e) {
       console.warn('Failed to load saved portfolio data:', e);
     }
-    return defaultData;
+    return {
+      ...defaultData,
+      projects: initialProjects,
+    };
   });
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -38,6 +74,7 @@ export function PortfolioProvider({ children }) {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
+      localStorage.setItem(PROJECTS_KEY, JSON.stringify(portfolioData.projects));
     } catch (e) {
       console.warn('Failed to save portfolio data:', e);
     }
@@ -101,6 +138,7 @@ export function PortfolioProvider({ children }) {
   const resetToDefault = useCallback(() => {
     setPortfolioData(defaultData);
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PROJECTS_KEY);
   }, []);
 
   // ── Export ──

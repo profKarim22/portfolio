@@ -25,99 +25,111 @@ export default function Projects() {
         </div>
 
         <div className="projects-grid">
-          {projects.map((project) => (
-            <div
-              className={`project-card glass-card ${
-                project.isFeatured ? "is-featured" : ""
-              }`}
-              key={project.id}
-              style={{ "--domain-color": project.domainColor }}
-            >
-              {/* Top Meta Bar */}
-              <div className="project-topbar">
-                <div className="project-domain">
-                  <span
-                    className="domain-dot"
-                    style={{ background: project.domainColor }}
-                  />
-                  {project.domain}
-                </div>
-                <div className="badge-tag">
-                  {project.isFeatured && <FaStar className="badge-star" />}
-                  {project.badge}
-                </div>
-              </div>
+          {projects.map((project) => {
+            const isFeatured = project.isFeatured ?? project.featured;
+            const techList = project.tech || project.techStack || [];
+            const githubUrl = project.github || project.githubUrl;
+            const demoUrl = project.liveDemo || project.liveUrl;
+            const figmaUrl = project.figmaLink || project.figmaUrl;
 
-              {/* Title & Description */}
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-description">{project.description}</p>
+            return (
+              <div
+                className={`project-card glass-card ${
+                  isFeatured ? "is-featured" : ""
+                }`}
+                key={project.id}
+                style={{ "--domain-color": project.domainColor }}
+              >
+                {/* Top Meta Bar */}
+                <div className="project-topbar">
+                  <div className="project-domain">
+                    <span
+                      className="domain-dot"
+                      style={{ background: project.domainColor }}
+                    />
+                    {project.domain}
+                  </div>
+                  <div className="badge-tag">
+                    {isFeatured && <FaStar className="badge-star" />}
+                    {project.badge}
+                  </div>
+                </div>
 
-              {/* Architectural Backend Metric Pills */}
-              {project.metrics && (
-                <div className="project-metrics">
-                  {project.metrics.map((m, i) => (
-                    <div className="metric-pill" key={i}>
-                      <span className="metric-val">{m.value}</span>
-                      <span className="metric-lbl">{m.label}</span>
-                    </div>
+                {/* Title & Description */}
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.description}</p>
+
+                {/* Architectural Backend Metric Pills */}
+                {project.metrics && (
+                  <div className="project-metrics">
+                    {project.metrics.map((m, i) => (
+                      <div className="metric-pill" key={i}>
+                        <span className="metric-val">{m.value}</span>
+                        <span className="metric-lbl">{m.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Key Highlights */}
+                {project.highlights && (
+                  <div className="project-highlights">
+                    {project.highlights.map((h, i) => (
+                      <div className="highlight-item" key={i}>
+                        <FaCheckCircle className="highlight-check" />
+                        <span>{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Tech Badges */}
+                <div className="project-tech">
+                  {techList.map((t, i) => (
+                    <span className="tech-tag" key={i}>
+                      {t}
+                    </span>
                   ))}
                 </div>
-              )}
 
-              {/* Key Highlights */}
-              <div className="project-highlights">
-                {project.highlights.map((h, i) => (
-                  <div className="highlight-item" key={i}>
-                    <FaCheckCircle className="highlight-check" />
-                    <span>{h}</span>
-                  </div>
-                ))}
+                {/* Action Buttons */}
+                <div className="project-actions">
+                  {githubUrl && (
+                    <a
+                      href={githubUrl}
+                      className="project-btn btn-github"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaGithub /> GitHub
+                    </a>
+                  )}
+
+                  {demoUrl && (
+                    <a
+                      href={demoUrl}
+                      className="project-btn btn-demo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaExternalLinkAlt /> Live Demo
+                    </a>
+                  )}
+
+                  {figmaUrl && (
+                    <a
+                      href={figmaUrl}
+                      className="project-btn btn-figma"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaFigma /> Figma Design
+                    </a>
+                  )}
+                </div>
               </div>
-
-              {/* Tech Badges */}
-              <div className="project-tech">
-                {project.tech.map((t, i) => (
-                  <span className="tech-tag" key={i}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="project-actions">
-                <a
-                  href={project.github}
-                  className="project-btn btn-github"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub /> GitHub
-                </a>
-
-                {project.liveDemo && (
-                  <a
-                    href={project.liveDemo}
-                    className="project-btn btn-demo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaExternalLinkAlt /> Live Demo
-                  </a>
-                )}
-
-                {project.figmaLink && (
-                  <a
-                    href={project.figmaLink}
-                    className="project-btn btn-figma"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaFigma /> Figma Design
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
