@@ -119,7 +119,7 @@ function ProjectEditor({ project, onSave, onCancel }) {
             type="text"
             value={form.title}
             onChange={(e) => updateField('title', e.target.value)}
-            placeholder="e.g. Distributed E-Commerce Microservices Engine"
+            placeholder="e.g. AI Event Management System"
           />
         </div>
 

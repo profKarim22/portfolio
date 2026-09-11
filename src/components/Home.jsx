@@ -11,8 +11,8 @@ export default function Home() {
       {
         engineer: "Karim Abbas Elashiry",
         standing: "Level 04 CS Senior (HICIS 6th of Oct)",
-        role: "Backend Developer & Software Engineer",
-        stack: ["Node.js", "Express", "PostgreSQL", "Redis"],
+        role: "Backend Developer & Computer Science Senior",
+        stack: ["Node.js", "Express", "MySQL", "MongoDB"],
         status: "Available for Engineering Roles",
       },
       null,
@@ -47,7 +47,7 @@ export default function Home() {
           <div className="bio-badge-row">
             <div className="bio-status-pill">
               <span className="status-dot" />
-              <span>LEVEL 04 CS // BACKEND ARCHITECT</span>
+              <span>BACKEND ENGINEERING • API DESIGN</span>
             </div>
             <div className="bio-institute-pill">
               <span>🏛️ HICIS 6TH OF OCT</span>
@@ -67,8 +67,8 @@ export default function Home() {
           {/* 3. Concise 2-Sentence Bio */}
           <p className="bio-summary-text">
             Senior Computer Science student at the <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
-            Dedicated to architecting high-throughput RESTful services, resilient distributed databases,
-            and scalable server-side systems.
+            Building robust backend systems, scalable APIs, and data-driven applications
+            with Node.js, Express.js, SQL, and NoSQL technologies.
           </p>
 
           {/* 4. Structured Architecture Highlights */}
@@ -83,14 +83,14 @@ export default function Home() {
             <div className="bio-highlight-item">
               <span className="highlight-icon">🗄️</span>
               <div className="highlight-text">
-                <strong>Data Persistence:</strong> PostgreSQL, MySQL &amp; Redis Caching
+                <strong>Data Persistence:</strong> MySQL, MongoDB &amp; Prisma ORM
               </div>
             </div>
 
             <div className="bio-highlight-item">
               <span className="highlight-icon">🛡️</span>
               <div className="highlight-text">
-                <strong>Architecture:</strong> Distributed Services &amp; System Design
+                <strong>Architecture:</strong> Server-Side Design &amp; API Security
               </div>
             </div>
           </div>
@@ -127,8 +127,8 @@ export default function Home() {
                   {"\n"}
                   {"  "}<span className="t-key">"engineer"</span>: <span className="t-string">"Karim Abbas Elashiry"</span>,{"\n"}
                   {"  "}<span className="t-key">"standing"</span>: <span className="t-string">"Level 04 CS Senior (HICIS 6th of Oct)"</span>,{"\n"}
-                  {"  "}<span className="t-key">"role"</span>: <span className="t-string">"Backend Architect & Distributed Systems"</span>,{"\n"}
-                  {"  "}<span className="t-key">"stack"</span>: <span className="t-string">["Node.js", "Express", "PostgreSQL", "Redis"]</span>,{"\n"}
+                  {"  "}<span className="t-key">"role"</span>: <span className="t-string">"Backend Developer & Computer Science Senior"</span>,{"\n"}
+                  {"  "}<span className="t-key">"stack"</span>: <span className="t-string">["Node.js", "Express", "MySQL", "MongoDB"]</span>,{"\n"}
                   {"  "}<span className="t-key">"status"</span>: <span className="t-string">"Available for Engineering Roles"</span>{"\n"}
                   {`}`}
                 </span>

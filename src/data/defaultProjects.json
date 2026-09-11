@@ -52,9 +52,9 @@
       "domain": "AI & Event Platform",
       "domainColor": "#38bdf8",
       "metrics": [
-        { "label": "Throughput", "value": "850+ req/sec" },
-        { "label": "API Latency", "value": "<45ms" },
-        { "label": "Security", "value": "100% RBAC" }
+        { "label": "Backend", "value": "Node.js + Express.js" },
+        { "label": "Database", "value": "MySQL + Prisma ORM" },
+        { "label": "Real-Time", "value": "Socket.IO" }
       ],
       "description": "An AI-powered event management and recommendation platform featuring intelligent event recommendations, event discovery, intelligent search, digital ticketing, real-time communication, and B2B event services.",
       "highlights": [
@@ -185,11 +185,12 @@
         "Express.js",
         "TypeScript",
         "JavaScript (ES6+)",
-        "PostgreSQL",
         "MySQL",
         "MongoDB",
-        "RESTful API Conventions",
-        "JWT & Security"
+        "SQL",
+        "NoSQL",
+        "RESTful APIs",
+        "JWT & Authentication"
       ],
       "backend_tools_and_data": ["Prisma ORM", "Postman"],
       "foundations_and_algorithms": [
@@ -199,11 +200,37 @@
         "Algorithms & Problem Solving"
       ],
       "applied_and_exploratory": [
+        "Redis",
         "Computer Vision Basics (Image Processing & Pattern Detection)",
-        "Client-Side Foundations (HTML5, CSS3, React Basics, Flutter)",
-        "Redis"
+        "Client-Side Foundations (HTML5, CSS3, React Basics, Flutter)"
       ]
     },
+
+    "projects": [
+      {
+        "name": "AI Event Management & Recommendation System",
+        "stack": "Node.js + Express.js + TypeScript",
+        "database": "MySQL + Prisma ORM",
+        "features": "AI Recommendations, Real-Time Chat, Digital Ticketing"
+      },
+      {
+        "name": "Algorithmic Storytelling & Web Audio Experience",
+        "stack": "Vanilla JavaScript + HTML5 Canvas",
+        "engine": "Web Audio API + Procedural Synthesizer",
+        "features": "Matrix Rain Simulation, Parametric Geometry, Image Optimization"
+      },
+      {
+        "name": "Personal Portfolio",
+        "stack": "React.js + Three.js + Vite",
+        "features": "3D Interactive Badge, Live API Console, Glassmorphism UI"
+      },
+      {
+        "name": "User Greeting & UI Component System",
+        "stack": "React.js + TypeScript + Radix UI",
+        "design": "Figma Specifications",
+        "features": "Accessible Components, Type-Safe Architecture"
+      }
+    ],
 
     "status": {
       "portfolio": "Online",

@@ -37,10 +37,9 @@ export default function ApiTerminal() {
   const [activeRoute, setActiveRoute] = useState("profile");
   const [copied, setCopied] = useState(false);
 
-  // Build endpoints from context data without any legacy projects endpoint
+  // Build endpoints from context data
   const ENDPOINTS = useMemo(() => {
     const endpoints = { ...(portfolioData?.apiEndpoints || {}) };
-    delete endpoints.projects;
     return endpoints;
   }, [portfolioData?.apiEndpoints]);
 

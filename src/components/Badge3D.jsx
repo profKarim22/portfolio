@@ -127,7 +127,7 @@ function createMassiveSkillBadgeTexture(photoImage) {
 
   ctx.fillStyle = "#38bdf8";
   ctx.font = "bold 28px 'Segoe UI', sans-serif";
-  ctx.fillText("Backend Developer & CS Undergrad", 470, 314);
+  ctx.fillText("Backend Developer & CS Senior", 470, 314);
 
   // Clearance Pill
   ctx.fillStyle = "rgba(16, 185, 129, 0.15)";
@@ -159,7 +159,7 @@ function createMassiveSkillBadgeTexture(photoImage) {
     { name: "Node.js", role: "Runtime & Core Server", color: "#22c55e", icon: "HEXAGON" },
     { name: "Express.js", role: "RESTful Framework", color: "#f8fafc", icon: "CODE" },
     { name: "C++", role: "Algorithms & OOP Foundation", color: "#38bdf8", icon: "CPP" },
-    { name: "PostgreSQL / MySQL", role: "ACID Relational Storage", color: "#0ea5e9", icon: "DATABASE" },
+    { name: "MySQL / MongoDB", role: "Relational & Document Storage", color: "#0ea5e9", icon: "DATABASE" },
     { name: "Redis", role: "In-Memory Caching & Pub/Sub", color: "#ef4444", icon: "REDIS" },
     { name: "Computer Vision", role: "OpenCV / Image Processing Basics", color: "#a855f7", icon: "VISION" },
     { name: "REST APIs", role: "API Architecture & Contracts", color: "#f59e0b", icon: "API" },
@@ -235,7 +235,7 @@ function createMassiveSkillBadgeTexture(photoImage) {
         ctx.fillText("C++", 0, 2);
         break;
 
-      case "DATABASE": // PostgreSQL / MySQL
+      case "DATABASE": // MySQL / MongoDB
         ctx.strokeRect(-20, -22, 40, 44);
         ctx.beginPath();
         ctx.moveTo(-20, -6);
