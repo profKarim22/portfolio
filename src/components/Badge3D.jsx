@@ -62,12 +62,12 @@ function createMassiveSkillBadgeTexture(photoImage) {
   ctx.fill();
 
   ctx.fillStyle = "#38bdf8";
-  ctx.font = "bold 28px monospace";
+  ctx.font = "bold 24px monospace";
   ctx.textAlign = "left";
-  ctx.fillText("SYSTEM ACCESS // ROOT 04", 86, 114);
+  ctx.fillText("HICIS 6TH OF OCT // CS SENIOR", 86, 114);
 
   ctx.fillStyle = "#94a3b8";
-  ctx.font = "bold 22px monospace";
+  ctx.font = "bold 20px monospace";
   ctx.textAlign = "right";
   ctx.fillText("SECURITY PASS // AUTH", 964, 114);
 
@@ -127,7 +127,7 @@ function createMassiveSkillBadgeTexture(photoImage) {
 
   ctx.fillStyle = "#38bdf8";
   ctx.font = "bold 28px 'Segoe UI', sans-serif";
-  ctx.fillText("Backend Developer & UI/UX", 470, 314);
+  ctx.fillText("Backend Developer & CS Undergrad", 470, 314);
 
   // Clearance Pill
   ctx.fillStyle = "rgba(16, 185, 129, 0.15)";
@@ -156,14 +156,14 @@ function createMassiveSkillBadgeTexture(photoImage) {
 
   // 5. THE MASSIVE 8-SKILL GRID (Fills entire lower card from Y=645 to Y=1470)
   const skills = [
-    { name: "Node.js", role: "Runtime & Cluster", color: "#22c55e", icon: "HEXAGON" },
+    { name: "Node.js", role: "Runtime & Core Server", color: "#22c55e", icon: "HEXAGON" },
     { name: "Express.js", role: "RESTful Framework", color: "#f8fafc", icon: "CODE" },
-    { name: "TypeScript", role: "Strict Typing Engine", color: "#3b82f6", icon: "TS" },
-    { name: "REST APIs", role: "API Architecture", color: "#f59e0b", icon: "API" },
-    { name: "MySQL", role: "ACID Relational DB", color: "#00758f", icon: "DATABASE" },
-    { name: "MongoDB", role: "NoSQL Document Store", color: "#10b981", icon: "LEAF" },
-    { name: "Flutter", role: "Cross-Platform UI", color: "#38bdf8", icon: "MOBILE" },
-    { name: "Figma", role: "Design Systems & UX", color: "#f24e1e", icon: "FIGMA" },
+    { name: "C++", role: "Algorithms & OOP Foundation", color: "#38bdf8", icon: "CPP" },
+    { name: "PostgreSQL / MySQL", role: "ACID Relational Storage", color: "#0ea5e9", icon: "DATABASE" },
+    { name: "Redis", role: "In-Memory Caching & Pub/Sub", color: "#ef4444", icon: "REDIS" },
+    { name: "Computer Vision", role: "OpenCV / Image Processing Basics", color: "#a855f7", icon: "VISION" },
+    { name: "REST APIs", role: "API Architecture & Contracts", color: "#f59e0b", icon: "API" },
+    { name: "Frontend UI", role: "Modern Web & Flutter Basics", color: "#10b981", icon: "UI" },
   ];
 
   const startY = 645;
@@ -228,14 +228,14 @@ function createMassiveSkillBadgeTexture(photoImage) {
         ctx.stroke();
         break;
 
-      case "TS": // TypeScript
-        ctx.font = "900 32px monospace";
+      case "CPP": // C++
+        ctx.font = "900 28px monospace";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText("TS", 0, 2);
+        ctx.fillText("C++", 0, 2);
         break;
 
-      case "DATABASE": // MySQL
+      case "DATABASE": // PostgreSQL / MySQL
         ctx.strokeRect(-20, -22, 40, 44);
         ctx.beginPath();
         ctx.moveTo(-20, -6);
@@ -245,30 +245,41 @@ function createMassiveSkillBadgeTexture(photoImage) {
         ctx.stroke();
         break;
 
-      case "LEAF": // MongoDB
+      case "REDIS": // Redis
         ctx.beginPath();
-        ctx.arc(0, 0, 20, 0, Math.PI);
+        ctx.moveTo(0, -22);
+        ctx.lineTo(22, 0);
+        ctx.lineTo(0, 22);
+        ctx.lineTo(-22, 0);
         ctx.closePath();
+        ctx.stroke();
+        ctx.fillRect(-7, -7, 14, 14);
+        break;
+
+      case "VISION": // Computer Vision
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 22, 13, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(0, 0, 6, 0, Math.PI * 2);
         ctx.fill();
         break;
 
       case "API": // REST APIs
-        ctx.font = "900 28px monospace";
+        ctx.font = "900 26px monospace";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("API", 0, 2);
         break;
 
-      case "MOBILE": // Flutter
-        ctx.strokeRect(-16, -24, 32, 48);
-        ctx.fillRect(-6, 14, 12, 4);
-        break;
-
-      case "FIGMA": // Figma
+      case "UI": // Frontend UI
+        ctx.strokeRect(-20, -16, 40, 32);
         ctx.beginPath();
-        ctx.arc(-10, -10, 10, 0, Math.PI * 2);
-        ctx.arc(10, -10, 10, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(-20, -6);
+        ctx.lineTo(20, -6);
+        ctx.stroke();
+        ctx.fillRect(-16, -12, 4, 4);
+        ctx.fillRect(-9, -12, 4, 4);
         break;
 
       default: // Express / Code
@@ -280,17 +291,19 @@ function createMassiveSkillBadgeTexture(photoImage) {
     }
     ctx.restore();
 
-    // Large, Crisp Typography for Skill Name (38px 900 pure white)
-    const textStartX = iconX + 76 + 22;
+    // Responsive Typography for Skill Name
+    const textStartX = iconX + 76 + 20;
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "#ffffff";
-    ctx.font = '900 38px "Segoe UI", sans-serif'; // Enormous, bold font
-    ctx.fillText(skill.name, textStartX, y + 68);
+    const nameFontSize = skill.name.length > 15 ? 26 : skill.name.length > 11 ? 32 : 38;
+    ctx.font = `900 ${nameFontSize}px "Segoe UI", sans-serif`;
+    ctx.fillText(skill.name, textStartX, y + (nameFontSize < 30 ? 64 : 68));
 
-    // Large Role / Sub-title
+    // Role / Sub-title
     ctx.fillStyle = skill.color;
-    ctx.font = "bold 22px monospace";
+    const roleFontSize = skill.role.length > 25 ? 17 : 21;
+    ctx.font = `bold ${roleFontSize}px monospace`;
     ctx.fillText(skill.role, textStartX, y + 112);
 
     // Status Indicator Dot

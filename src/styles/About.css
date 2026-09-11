@@ -1,207 +1,243 @@
 @import "./variables.css";
 
-/* ========================================
-   Executive About Section Styles
-   ======================================== */
-
+/* --- About Section Container --- */
 .about-section {
-  position: relative;
-  background: radial-gradient(
-      circle at 85% 15%,
-      rgba(129, 140, 248, 0.04),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 15% 85%,
-      rgba(56, 189, 248, 0.04),
-      transparent 38%
-    );
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 2rem;
-  align-items: stretch;
-}
-
-/* ── Narrative Story Card ── */
-.about-story {
-  padding: 2.2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 0;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-glass);
-}
-
-.story-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
-  background: rgba(56, 189, 248, 0.06);
-  border: 1px solid var(--border-glass);
-  color: var(--accent-cyan);
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  width: fit-content;
-  margin-bottom: 1.15rem;
-}
-
-.story-heading {
-  font-size: 1.7rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 1.15rem;
-  line-height: 1.25;
-  letter-spacing: -0.4px;
-}
-
-.story-text {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.72;
-  margin-bottom: 0.95rem;
-}
-
-.story-text strong {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.about-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.9rem;
-  margin-top: 1.5rem;
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.stat-box {
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.02);
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
-}
-
-.stat-value {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--accent-cyan);
-  font-family: var(--font-mono);
-}
-
-.stat-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin-top: 0.2rem;
-}
-
-.stat-sub {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  margin-top: 0.1rem;
-}
-
-/* ── Highlights Column ── */
-.about-highlights {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-
-.highlight-card {
-  padding: 1.25rem 1.45rem;
-  min-width: 0;
-  transition: transform 0.28s var(--ease-out-expo),
-    border-color 0.28s ease, box-shadow 0.28s ease;
+  width: 100%;
+  padding: 6.5rem 2rem;
+  background: transparent;
   position: relative;
   overflow: hidden;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-glass);
 }
 
-.highlight-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--card-accent);
-  box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.5);
-}
-
-.highlight-card.is-primary {
-  border-left: 3px solid var(--card-accent);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.02) 0%,
-    rgba(12, 19, 36, 0.85) 100%
-  );
-}
-
-.highlight-header {
+.about-container {
+  max-width: 1360px;
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+/* Header Typography */
+.about-header-wrap {
+  text-align: center;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.9rem;
-  margin-bottom: 0.65rem;
 }
 
-.highlight-icon-wrap {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid var(--border-subtle);
+.about-eyebrow-pill {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  letter-spacing: 0.6px;
+}
+
+.about-main-title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.about-lead-desc {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- 3-Column Interactive Grid --- */
+.about-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+/* --- The Modern Glass Card --- */
+.about-card {
+  position: relative;
+  background: rgba(10, 15, 29, 0.78);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 20px;
+  padding: 2.2rem 1.8rem;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
+  overflow: hidden;
+}
+
+/* Top Accent Line */
+.card-top-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--card-accent, #38bdf8), transparent);
+  opacity: 0.4;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+/* Hover Physics */
+.about-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(56, 189, 248, 0.38);
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.7),
+              0 0 28px -6px var(--card-accent, rgba(56, 189, 248, 0.25));
+}
+
+.about-card:hover .card-top-accent {
+  opacity: 1;
+  height: 4px;
+}
+
+/* Primary Card Subtle Pulse */
+.about-card-primary {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 10px 30px -15px rgba(16, 185, 129, 0.15);
+}
+
+/* Header Row */
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.card-eyebrow-text {
+  font-family: monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--card-accent, #38bdf8);
+  letter-spacing: 0.5px;
+}
+
+.card-pill-tag {
+  font-size: 0.74rem;
+  font-family: monospace;
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 0.22rem 0.6rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+/* Card Identity & Squircle Icon */
+.card-identity-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.card-icon-squircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  color: var(--card-accent);
+  font-size: 1.5rem;
   flex-shrink: 0;
+  box-shadow: inset 0 0 14px rgba(56, 189, 248, 0.08);
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.highlight-type {
-  display: block;
-  font-size: 0.7rem;
-  font-family: var(--font-mono);
-  color: var(--card-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  font-weight: 600;
+.about-card:hover .card-icon-squircle {
+  transform: scale(1.08) rotate(3deg);
+  border-color: var(--card-accent, #38bdf8);
 }
 
-.highlight-title {
-  font-size: 1.05rem;
-  font-weight: 700;
+.card-title-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
   color: #ffffff;
-  margin-top: 0.1rem;
+  margin: 0;
+  line-height: 1.25;
 }
 
-.highlight-desc {
-  font-size: 0.86rem;
-  color: var(--text-muted);
-  line-height: 1.62;
+.card-subtitle {
+  font-size: 0.85rem;
+  font-family: monospace;
+  color: var(--card-accent, #38bdf8);
+  margin: 0;
+  line-height: 1.4;
 }
 
-/* ── Responsive ── */
-@media (max-width: 992px) {
-  .about-grid {
+/* Description Text */
+.card-description {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Chips Grid */
+.card-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.about-chip-item {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.about-chip-item:hover {
+  background: rgba(56, 189, 248, 0.12);
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+}
+
+/* --- Responsive Breakpoints --- */
+@media (max-width: 1080px) {
+  .about-cards-grid {
     grid-template-columns: 1fr;
+    max-width: 680px;
   }
 }
 
-@media (max-width: 600px) {
-  .about-story {
-    padding: 1.4rem;
+@media (max-width: 768px) {
+  .about-section {
+    padding: 4.5rem 1.25rem;
   }
-  .about-stats {
-    grid-template-columns: 1fr;
+
+  .about-card {
+    padding: 1.6rem 1.4rem;
   }
 }

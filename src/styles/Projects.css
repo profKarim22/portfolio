@@ -6,16 +6,7 @@
 
 .projects-section {
   position: relative;
-  background: radial-gradient(
-      circle at 80% 20%,
-      rgba(56, 189, 248, 0.04),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(129, 140, 248, 0.04),
-      transparent 38%
-    );
+  background: transparent;
 }
 
 .projects-grid {

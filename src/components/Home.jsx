@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import Badge3D from "./Badge3D";
+import { FaTerminal, FaCopy, FaCheck } from "react-icons/fa";
 import "../styles/Home.css";
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyProfile = () => {
+    const profileJson = JSON.stringify(
+      {
+        engineer: "Karim Abbas Elashiry",
+        standing: "Level 04 CS Senior (HICIS 6th of Oct)",
+        role: "Backend Developer & Software Engineer",
+        stack: ["Node.js", "Express", "PostgreSQL", "Redis"],
+        status: "Available for Engineering Roles",
+      },
+      null,
+      2
+    );
+    navigator.clipboard.writeText(profileJson);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <section
-      className="hero-section home-section"
-      id="home"
-    >
-      {/* Atmospheric Background */}
+    <section className="hero-section home-section" id="home">
+      {/* Atmospheric Ambient Background */}
       <div className="home-background">
         <div className="halo halo-1" />
         <div className="halo halo-2" />
@@ -18,79 +35,120 @@ export default function Home() {
         <div className="stars-layer stars-secondary" />
       </div>
 
-      {/* 1. Full-Bleed Left 3D Canvas Arena */}
+      {/* 1. 3D Interactive Badge Arena */}
       <div className="hero-badge-viewport-arena">
         <Badge3D />
       </div>
 
       {/* 2. Anchored Bio Card Container */}
       <div className="hero-content-container">
-        <div className="hero-bio-col">
-          <div className="home-text glass-card">
-            <div className="eyebrow">
-              <span className="eyebrow-dot" />
-              Backend Architecture • UI/UX Design
+        <div className="hero-bio-card">
+          {/* 1. Header Badges */}
+          <div className="bio-badge-row">
+            <div className="bio-status-pill">
+              <span className="status-dot" />
+              <span>LEVEL 04 CS // BACKEND ARCHITECT</span>
             </div>
-            <h1 className="home-title">
-              Backend Developer &amp;{" "}
-              <span className="highlight">UI/UX Designer</span>
-            </h1>
-            <h2 className="home-subtitle">Karim Abbas Elashiry</h2>
-            <p className="home-intro-text">
-              Architecting robust, scalable server-side systems and designing clean, intuitive user experiences — with practical experience in Mobile Application Development using Flutter &amp; Dart.
-            </p>
+            <div className="bio-institute-pill">
+              <span>🏛️ HICIS 6TH OF OCT</span>
+            </div>
+          </div>
 
-            {/* Terminal Snippet */}
-            <div className="terminal-snippet">
-              <div className="terminal-header">
+          {/* 2. Main Title */}
+          <div className="bio-heading-group">
+            <h1 className="bio-name">
+              Karim Abbas <span className="text-accent">Elashiry</span>
+            </h1>
+            <p className="bio-role-subtitle">
+              Backend Developer &amp; Computer Science Senior
+            </p>
+          </div>
+
+          {/* 3. Concise 2-Sentence Bio */}
+          <p className="bio-summary-text">
+            Senior Computer Science student at the <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
+            Dedicated to architecting high-throughput RESTful services, resilient distributed databases,
+            and scalable server-side systems.
+          </p>
+
+          {/* 4. Structured Architecture Highlights */}
+          <div className="bio-highlights-list">
+            <div className="bio-highlight-item">
+              <span className="highlight-icon">⚡</span>
+              <div className="highlight-text">
+                <strong>Core Runtime:</strong> Node.js, Express &amp; RESTful APIs
+              </div>
+            </div>
+
+            <div className="bio-highlight-item">
+              <span className="highlight-icon">🗄️</span>
+              <div className="highlight-text">
+                <strong>Data Persistence:</strong> PostgreSQL, MySQL &amp; Redis Caching
+              </div>
+            </div>
+
+            <div className="bio-highlight-item">
+              <span className="highlight-icon">🛡️</span>
+              <div className="highlight-text">
+                <strong>Architecture:</strong> Distributed Services &amp; System Design
+              </div>
+            </div>
+          </div>
+
+          {/* 5. Introductory Terminal Console */}
+          <div className="hero-terminal-box">
+            <div className="terminal-header">
+              <div className="window-dots">
                 <span className="terminal-dot red" />
                 <span className="terminal-dot yellow" />
                 <span className="terminal-dot green" />
-                <span className="terminal-title">~/karim-profile</span>
               </div>
-              <div className="terminal-body">
-                <code>
-                  <span className="t-prompt">$</span>{" "}
-                  <span className="t-cmd">curl</span>{" "}
-                  <span className="t-flag">-X GET</span>{" "}
-                  <span className="t-url">/api/v1/profile</span>
+              <div className="terminal-title">
+                <FaTerminal className="terminal-icon" /> ~/karim-profile
+              </div>
+              <button
+                onClick={handleCopyProfile}
+                className={`terminal-copy-btn ${copied ? "copied" : ""}`}
+                title="Copy Profile JSON"
+                type="button"
+              >
+                {copied ? <FaCheck /> : <FaCopy />}
+                <span>{copied ? "Copied" : "JSON"}</span>
+              </button>
+            </div>
+            <div className="terminal-body">
+              <code>
+                <span className="t-prompt">$</span> <span className="t-cmd">curl</span>{" "}
+                <span className="t-flag">-s</span>{" "}
+                <span className="t-url">https://karim.dev/api/v1/profile</span>
+                {"\n"}
+                <span className="t-response">
+                  {`{`}
                   {"\n"}
-                  <span className="t-response">
-                    {`{`}
-                    {"\n"}
-                    {"  "}<span className="t-key">"name"</span>: <span className="t-string">"Karim Abbas Elashiry"</span>,{"\n"}
-                    {"  "}<span className="t-key">"role"</span>: <span className="t-string">"Backend Developer & UI/UX Designer"</span>,{"\n"}
-                    {"  "}<span className="t-key">"primary"</span>: <span className="t-string">["Backend Development", "UI/UX Design"]</span>,{"\n"}
-                    {"  "}<span className="t-key">"supporting"</span>: <span className="t-string">["Flutter & Dart", "Web Dev", "AI / ML"]</span>,{"\n"}
-                    {"  "}<span className="t-key">"status"</span>: <span className="t-string">"available"</span>{"\n"}
-                    {`}`}
-                  </span>
-                </code>
-              </div>
+                  {"  "}<span className="t-key">"engineer"</span>: <span className="t-string">"Karim Abbas Elashiry"</span>,{"\n"}
+                  {"  "}<span className="t-key">"standing"</span>: <span className="t-string">"Level 04 CS Senior (HICIS 6th of Oct)"</span>,{"\n"}
+                  {"  "}<span className="t-key">"role"</span>: <span className="t-string">"Backend Architect & Distributed Systems"</span>,{"\n"}
+                  {"  "}<span className="t-key">"stack"</span>: <span className="t-string">["Node.js", "Express", "PostgreSQL", "Redis"]</span>,{"\n"}
+                  {"  "}<span className="t-key">"status"</span>: <span className="t-string">"Available for Engineering Roles"</span>{"\n"}
+                  {`}`}
+                </span>
+              </code>
             </div>
+          </div>
 
-            <div className="home-buttons">
-              <a href="#projects" className="btn btn-primary">
-                <span>View Projects</span>
-              </a>
-              <a href="#about" className="btn btn-secondary">
-                <span>About Me</span>
-              </a>
-            </div>
-
-            <div className="pill-row">
-              <span className="pill">Node.js</span>
-              <span className="pill">Express.js</span>
-              <span className="pill">TypeScript</span>
-              <span className="pill">Figma</span>
-              <span className="pill">MySQL</span>
-              <span className="pill">MongoDB</span>
-              <span className="pill">Flutter</span>
-              <span className="pill">REST APIs</span>
-            </div>
+          {/* 6. Streamlined Actions */}
+          <div className="bio-actions-row">
+            <a href="#projects" className="btn-bio-primary">
+              <span>Explore Projects</span>
+              <span className="btn-arrow">↗</span>
+            </a>
+            <a href="#terminal" className="btn-bio-secondary">
+              <span>API Explorer</span>
+            </a>
           </div>
         </div>
       </div>
     </section>
   );
 }
+

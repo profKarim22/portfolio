@@ -43,11 +43,32 @@ export function PortfolioProvider({ children }) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
+        // Clean out legacy properties from saved storage
+        if (parsed?.apiEndpoints) {
+          delete parsed.apiEndpoints.projects;
+          parsed.apiEndpoints.status = defaultData.apiEndpoints.status;
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+              ...parsed,
+              apiEndpoints: {
+                profile: defaultData.apiEndpoints.profile,
+                skills: defaultData.apiEndpoints.skills,
+                status: defaultData.apiEndpoints.status,
+              },
+            }));
+          } catch (_) {}
+        }
+
         // Merge with defaults to ensure any new fields are present
         return {
           ...defaultData,
           ...parsed,
           projects: initialProjects,
+          apiEndpoints: {
+            profile: defaultData.apiEndpoints.profile,
+            skills: defaultData.apiEndpoints.skills,
+            status: defaultData.apiEndpoints.status,
+          },
           statusConfig: {
             ...defaultData.statusConfig,
             ...(parsed.statusConfig || {}),
@@ -64,6 +85,11 @@ export function PortfolioProvider({ children }) {
     return {
       ...defaultData,
       projects: initialProjects,
+      apiEndpoints: {
+        profile: defaultData.apiEndpoints.profile,
+        skills: defaultData.apiEndpoints.skills,
+        status: defaultData.apiEndpoints.status,
+      },
     };
   });
 
@@ -120,10 +146,15 @@ export function PortfolioProvider({ children }) {
 
   // ── API Endpoints ──
   const updateApiEndpoint = useCallback((key, data) => {
-    setPortfolioData((prev) => ({
-      ...prev,
-      apiEndpoints: { ...prev.apiEndpoints, [key]: data },
-    }));
+    if (key === 'projects') return;
+    setPortfolioData((prev) => {
+      const nextEndpoints = { ...prev.apiEndpoints, [key]: data };
+      delete nextEndpoints.projects;
+      return {
+        ...prev,
+        apiEndpoints: nextEndpoints,
+      };
+    });
   }, []);
 
   // ── Status ──
@@ -136,7 +167,16 @@ export function PortfolioProvider({ children }) {
 
   // ── Reset ──
   const resetToDefault = useCallback(() => {
-    setPortfolioData(defaultData);
+    const cleanDefault = {
+      ...defaultData,
+      apiEndpoints: {
+        profile: defaultData.apiEndpoints.profile,
+        skills: defaultData.apiEndpoints.skills,
+        status: defaultData.apiEndpoints.status,
+      },
+    };
+    delete cleanDefault.apiEndpoints.projects;
+    setPortfolioData(cleanDefault);
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(PROJECTS_KEY);
   }, []);

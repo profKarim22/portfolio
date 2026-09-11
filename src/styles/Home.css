@@ -28,6 +28,20 @@
     linear-gradient(160deg, #03060c 0%, #060913 45%, #090f1f 100%);
 }
 
+/* Seamless bottom fade into unified obsidian base */
+.home-section::after,
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, #060913);
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* ── Atmospheric Background Layers ── */
 .home-background {
   position: absolute;
@@ -171,111 +185,187 @@
   pointer-events: none;
 }
 
-.hero-bio-col,
-.hero-content,
-.home-content-col {
-  width: 100%;
-  max-width: 630px;
-  pointer-events: auto;
+/* --- Main Bio Card Container (No white corner arrows/brackets!) --- */
+.hero-bio-card {
+  position: relative;
+  background: rgba(10, 15, 29, 0.82);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 20px;
+  padding: 2.25rem;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7),
+              0 0 30px rgba(56, 189, 248, 0.05);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  gap: 1.4rem;
+  max-width: 620px;
+  width: 100%;
+  box-sizing: border-box;
+  pointer-events: auto;
   animation: fadeInUp 0.75s var(--ease-out-expo) 0.1s both;
 }
 
-/* ── Bio Card ── */
-.home-text {
-  width: 100%;
-  padding: 1.85rem 2.2rem;
-  border-radius: 20px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-glass);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+/* ⚠️ STRICT FIX: Remove any white corner brackets / pseudo-elements */
+.hero-bio-card::before,
+.hero-bio-card::after,
+.corner-bracket,
+.corner-tl, .corner-tr, .corner-bl, .corner-br,
+.hud-corner, .hud-top-left, .hud-top-right, .hud-bottom-left, .hud-bottom-right {
+  display: none !important;
+  content: none !important;
 }
 
-.eyebrow {
+/* 1. Header Badges */
+.bio-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.bio-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-glass);
-  background: rgba(56, 189, 248, 0.06);
-  color: var(--accent-cyan);
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 9999px;
+  font-family: var(--font-mono, monospace);
   font-size: 0.78rem;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-  font-weight: 600;
-  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.4px;
 }
 
-.eyebrow-dot {
-  width: 6px;
-  height: 6px;
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: #10b981;
   border-radius: 50%;
-  background: var(--accent-cyan);
-  animation: statusPulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px #10b981;
 }
 
-.home-title {
-  font-size: 2.6rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
+.bio-institute-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(148, 163, 184, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+/* 2. Heading Typography */
+.bio-heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.bio-name {
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  font-weight: 900;
+  line-height: 1.1;
   color: #ffffff;
-  line-height: 1.16;
-  letter-spacing: -0.7px;
+  margin: 0;
+  letter-spacing: -0.8px;
 }
 
-.home-title .highlight {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+.text-accent {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.home-subtitle {
-  font-size: 1.2rem;
+.bio-role-subtitle {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--accent-cyan);
-  margin-bottom: 0.6rem;
-  letter-spacing: 0.2px;
+  color: #94a3b8;
+  margin: 0;
 }
 
-.home-intro-text {
-  font-size: 0.96rem;
-  color: var(--text-secondary);
-  line-height: 1.68;
-  margin-bottom: 1.35rem;
+/* 3. Bio Paragraph */
+.bio-summary-text {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #94a3b8;
+  margin: 0;
 }
 
-/* ── Hero Terminal Snippet ── */
-.terminal-snippet {
-  border-radius: var(--radius-md);
+.bio-summary-text strong {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* 4. Architecture Highlights (Clean rows, no text truncation) */
+.bio-highlights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem 1.1rem;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: 14px;
+}
+
+.bio-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.highlight-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.highlight-text strong {
+  color: #38bdf8;
+  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.85rem;
+  margin-right: 0.35rem;
+}
+
+/* 5. Cyber Mini-Terminal Box */
+.hero-terminal-box {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: rgba(5, 9, 18, 0.95);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04),
+              0 8px 24px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  margin-bottom: 1.6rem;
-  border: 1px solid var(--border-glass);
-  background: rgba(6, 10, 20, 0.92);
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  line-height: 1.7;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-sizing: border-box;
 }
 
-.terminal-header {
+.hero-terminal-box .terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.window-dots {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 0.55rem 0.95rem;
-  background: rgba(255, 255, 255, 0.035);
-  border-bottom: 1px solid var(--border-subtle);
 }
 
 .terminal-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }
 
@@ -284,43 +374,117 @@
 .terminal-dot.green { background: #10b981; }
 
 .terminal-title {
-  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono, monospace);
   font-size: 0.72rem;
-  color: var(--text-dim);
+  color: #94a3b8;
 }
 
-.terminal-body {
-  padding: 0.95rem 1.15rem;
+.terminal-icon {
+  color: #38bdf8;
+  font-size: 0.75rem;
+}
+
+.terminal-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.terminal-copy-btn:hover {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: #38bdf8;
+}
+
+.terminal-copy-btn.copied {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.hero-terminal-box .terminal-body {
+  padding: 0.75rem 0.95rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.77rem;
+  line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-all;
-  overflow-x: auto;
 }
 
-.terminal-body code {
-  font-family: var(--font-mono);
-}
+.t-prompt { color: #10b981; font-weight: 700; }
+.t-cmd { color: #38bdf8; font-weight: 600; }
+.t-flag { color: #a855f7; }
+.t-url { color: #fbbf24; }
+.t-response { color: #94a3b8; }
+.t-key { color: #38bdf8; }
+.t-string { color: #34d399; }
 
-.t-prompt { color: var(--accent-emerald); }
-.t-cmd { color: var(--accent-cyan); }
-.t-flag { color: var(--accent-violet); }
-.t-url { color: var(--accent-amber); text-decoration: underline; text-underline-offset: 2px; }
-.t-response { color: var(--text-muted); }
-.t-key { color: var(--accent-cyan); }
-.t-string { color: var(--accent-emerald); }
-
-/* ── Buttons & Pills ── */
-.home-buttons {
+/* 6. Streamlined Action Buttons (No WhatsApp) */
+.bio-actions-row {
   display: flex;
-  gap: 0.9rem;
-  margin-bottom: 0;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.4rem;
 }
 
-.pill-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 1.35rem;
-  animation: fadeInUp 0.75s var(--ease-out-expo) 0.3s both;
+.btn-bio-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #38bdf8;
+  color: #040813;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-bio-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
+}
+
+.btn-arrow {
+  font-size: 1rem;
+  transition: transform 0.15s ease;
+}
+
+.btn-bio-primary:hover .btn-arrow {
+  transform: translate(2px, -2px);
+}
+
+.btn-bio-secondary {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-bio-secondary:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
 }
 
 /* ── Responsive Adaptations ── */
@@ -362,18 +526,13 @@
     order: 2;
   }
 
+  .hero-bio-card,
   .hero-bio-col,
   .hero-content,
   .home-content-col {
-    max-width: 680px;
+    max-width: 640px;
     width: 100%;
     margin: 0 auto;
-    text-align: center;
-    align-items: center;
-  }
-
-  .home-buttons {
-    justify-content: center;
   }
 }
 
@@ -384,6 +543,23 @@
     padding: 85px 16px 40px;
   }
 
+  .hero-bio-card {
+    padding: 1.5rem;
+    gap: 1.2rem;
+    text-align: left;
+  }
+
+  .bio-actions-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-bio-primary,
+  .btn-bio-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
   .hero-badge-viewport-arena {
     height: 330px;
     max-width: 320px;
@@ -392,47 +568,6 @@
   .badge-canvas-container {
     height: 330px;
     max-width: 320px;
-  }
-
-  .home-title {
-    font-size: clamp(1.85rem, 6vw, 2.6rem) !important;
-    line-height: 1.25 !important;
-  }
-
-  .home-subtitle {
-    font-size: 1.15rem !important;
-  }
-
-  .home-intro-text {
-    font-size: 0.95rem !important;
-    line-height: 1.6 !important;
-  }
-
-  .home-buttons {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    gap: 12px;
-  }
-
-  .home-buttons .btn {
-    width: 100%;
-    max-width: 100%;
-    padding: 14px;
-    font-size: 0.95rem;
-    justify-content: center;
-  }
-
-  .pill-row {
-    justify-content: center;
-  }
-
-  .eyebrow {
-    font-size: 0.72rem;
-  }
-
-  .terminal-snippet {
-    font-size: 0.75rem;
   }
 }
 
@@ -446,11 +581,11 @@
     height: 290px;
   }
 
-  .home-title {
-    font-size: 1.65rem !important;
+  .bio-name {
+    font-size: 1.9rem;
   }
 
-  .home-text {
-    padding: 1.35rem 1.15rem;
+  .hero-bio-card {
+    padding: 1.25rem 1.1rem;
   }
 }

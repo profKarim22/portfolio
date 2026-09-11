@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { FaCopy, FaCheck } from "react-icons/fa";
 import { usePortfolio } from "../context/PortfolioContext";
 import "../styles/ApiTerminal.css";
@@ -37,19 +37,23 @@ export default function ApiTerminal() {
   const [activeRoute, setActiveRoute] = useState("profile");
   const [copied, setCopied] = useState(false);
 
-  // Build endpoints from context data, inject live timestamp for status
+  // Build endpoints from context data without any legacy projects endpoint
   const ENDPOINTS = useMemo(() => {
     const endpoints = { ...(portfolioData?.apiEndpoints || {}) };
-    if (endpoints.status) {
-      endpoints.status = {
-        ...endpoints.status,
-        timestamp: new Date().toISOString(),
-      };
-    }
+    delete endpoints.projects;
     return endpoints;
   }, [portfolioData?.apiEndpoints]);
 
-  const activeData = useMemo(() => ENDPOINTS[activeRoute] || ENDPOINTS.profile, [activeRoute, ENDPOINTS]);
+  const activeData = useMemo(
+    () => (activeRoute && ENDPOINTS[activeRoute]) ? ENDPOINTS[activeRoute] : (ENDPOINTS.profile || {}),
+    [activeRoute, ENDPOINTS]
+  );
+
+  useEffect(() => {
+    if (activeRoute && !ENDPOINTS[activeRoute]) {
+      setActiveRoute("profile");
+    }
+  }, [activeRoute, ENDPOINTS]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(activeData, null, 2));

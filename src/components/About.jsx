@@ -1,122 +1,115 @@
 import React from "react";
-import { FaServer, FaFigma, FaMobileAlt, FaBrain } from "react-icons/fa";
 import "../styles/About.css";
 
-export default function About() {
-  const highlights = [
-    {
-      icon: <FaServer />,
-      title: "Backend Architecture",
-      type: "Primary Specialization",
-      description:
-        "Designing robust, secure RESTful APIs, modular MVC structures, authentication pipelines (JWT/RBAC), and efficient database schemas with MySQL, MongoDB, Prisma, and Sequelize.",
-      color: "#7bdff2",
-      isPrimary: true,
-    },
-    {
-      icon: <FaFigma />,
-      title: "UI/UX Design",
-      type: "Primary Specialization",
-      description:
-        "Crafting intuitive digital experiences in Figma through user flows, wireframing, high-fidelity interactive prototyping, design systems, and responsive layouts.",
-      color: "#b794f4",
-      isPrimary: true,
-    },
-    {
-      icon: <FaMobileAlt />,
-      title: "Mobile Development",
-      type: "Practical Experience",
-      description:
-        "Developing cross-platform mobile applications using Flutter & Dart, implementing responsive mobile interfaces, and seamless REST API integrations.",
-      color: "#10b981",
-      isPrimary: false,
-    },
-    {
-      icon: <FaBrain />,
-      title: "AI & ML Fundamentals",
-      type: "Applied Knowledge",
-      description:
-        "Applying machine learning fundamentals with Python, Pandas, NumPy, and Scikit-learn for data preprocessing and core predictive modeling.",
-      color: "#f59e0b",
-      isPrimary: false,
-    },
-  ];
+const aboutData = [
+  {
+    id: "academic",
+    eyebrow: "// ACADEMIC FOUNDATION",
+    badge: "Education",
+    icon: "🎓",
+    title: "Computer Science Student",
+    subtitle: "Higher Institute of CS & IS — 6th of October City • Level 04",
+    description:
+      "Building a strong foundation in operating systems, distributed systems, database internals, and algorithmic problem-solving.",
+    chips: [
+      "Operating Systems",
+      "Distributed Systems",
+      "Database Internals",
+      "Algorithmic Problem Solving",
+    ],
+    accentColor: "#38bdf8",
+  },
 
+  {
+    id: "specialty",
+    eyebrow: "// CORE SPECIALTY",
+    badge: "Backend Development",
+    icon: "⚡",
+    title: "Backend Engineering",
+    subtitle: "Node.js • Express.js • MySQL • MongoDB • RESTful APIs",
+    description:
+      "Building secure and scalable backend services with Node.js, RESTful APIs, database integration, authentication, and clean server-side architecture.",
+    chips: [
+      "RESTful API Development",
+      "Database Integration",
+      "Authentication & Authorization",
+      "Backend Architecture",
+    ],
+    accentColor: "#10b981",
+    isPrimary: true,
+  },
+
+  {
+    id: "horizons",
+    eyebrow: "// SUPPORTING HORIZONS",
+    badge: "Additional Skills",
+    icon: "🧭",
+    title: "Additional Technical Skills",
+    subtitle: "C++ • Computer Vision • React • Flutter",
+    description:
+      "Exploring algorithmic programming with C++, computer vision using OpenCV, and modern client-side development with React and Flutter.",
+    chips: ["C++ & OOP", "Computer Vision", "React", "Flutter"],
+    accentColor: "#818cf8",
+  },
+];
+
+export default function About() {
   return (
-    <section className="section about-section" id="about">
-      <div className="container">
-        <div className="section-header">
-          <span className="section-label">// Profile Overview</span>
-          <h2 className="section-title">About Me</h2>
-          <p className="section-subtitle">
-            Bridging robust backend engineering with thoughtful, human-centered UI/UX design
+    <section id="about" className="about-section">
+      <div className="about-container">
+        {/* Section Header */}
+        <div className="about-header-wrap">
+          <span className="about-eyebrow-pill">
+            // ACADEMIC &amp; ENGINEERING IDENTITY
+          </span>
+          <h2 className="about-main-title">About Me</h2>
+          <p className="about-lead-desc">
+            A calm, clutter-free overview of academic foundations, core backend
+            architecture, and applied technical horizons.
           </p>
         </div>
 
-        <div className="about-grid">
-          {/* Main Story / Narrative */}
-          <div className="about-story glass-card">
-            <div className="story-badge">
-              <span className="badge-dot" />
-              Professional Focus
-            </div>
+        {/* 3 Interactive Cards */}
+        <div className="about-cards-grid">
+          {aboutData.map((card) => (
+            <div
+              key={card.id}
+              className={`about-card ${card.isPrimary ? "about-card-primary" : ""}`}
+              style={{ "--card-accent": card.accentColor }}
+            >
+              {/* Top Glow Accent Bar */}
+              <div className="card-top-accent" />
 
-            <h3 className="story-heading">
-              Backend Developer &amp; UI/UX Designer
-            </h3>
-
-            <p className="story-text">
-              I am a dedicated <strong>Backend Developer &amp; UI/UX Designer</strong> with hands-on experience in <strong>Mobile Application Development using Flutter &amp; Dart</strong>. My passion lies at the intersection of solid server-side architecture and intuitive user interfaces.
-            </p>
-
-            <p className="story-text">
-              On the server side, I focus on engineering well-structured RESTful APIs, clean MVC codebases, resilient data access layers with <strong>MySQL</strong> and <strong>MongoDB</strong> (leveraging Prisma ORM and Sequelize), and secure authentication workflows.
-            </p>
-
-            <p className="story-text">
-              On the design side, I prioritize clear information architecture, user-centered wireframes, and responsive component design systems in <strong>Figma</strong>—ensuring software is not only performant under the hood, but intuitive and pleasant for people to use.
-            </p>
-
-            <div className="about-stats">
-              <div className="stat-box">
-                <span className="stat-value">2</span>
-                <span className="stat-label">Core Pillars</span>
-                <span className="stat-sub">Backend &amp; UI/UX</span>
+              {/* Header Badges */}
+              <div className="card-header-row">
+                <span className="card-eyebrow-text">{card.eyebrow}</span>
+                <span className="card-pill-tag">{card.badge}</span>
               </div>
-              <div className="stat-box">
-                <span className="stat-value">Real</span>
-                <span className="stat-label">GitHub Projects</span>
-                <span className="stat-sub">Verified &amp; Deployed</span>
-              </div>
-              <div className="stat-box">
-                <span className="stat-value">Clean</span>
-                <span className="stat-label">Code &amp; Systems</span>
-                <span className="stat-sub">Maintainable Design</span>
-              </div>
-            </div>
-          </div>
 
-          {/* Specialization Highlights */}
-          <div className="about-highlights">
-            {highlights.map((item, idx) => (
-              <div
-                key={idx}
-                className={`highlight-card glass-card ${
-                  item.isPrimary ? "is-primary" : ""
-                }`}
-                style={{ "--card-accent": item.color }}
-              >
-                <div className="highlight-header">
-                  <div className="highlight-icon-wrap">{item.icon}</div>
-                  <div>
-                    <span className="highlight-type">{item.type}</span>
-                    <h4 className="highlight-title">{item.title}</h4>
-                  </div>
+              {/* Title & Icon Group */}
+              <div className="card-identity-group">
+                <div className="card-icon-squircle">
+                  <span>{card.icon}</span>
                 </div>
-                <p className="highlight-desc">{item.description}</p>
+                <div className="card-title-meta">
+                  <h3 className="card-title">{card.title}</h3>
+                  <p className="card-subtitle">{card.subtitle}</p>
+                </div>
               </div>
-            ))}
-          </div>
+
+              {/* Description Body */}
+              <p className="card-description">{card.description}</p>
+
+              {/* Skill Chips Matrix */}
+              <div className="card-chips-wrapper">
+                {card.chips.map((chip, idx) => (
+                  <span key={idx} className="about-chip-item">
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

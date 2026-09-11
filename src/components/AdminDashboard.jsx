@@ -291,12 +291,12 @@ function ProjectEditor({ project, onSave, onCancel }) {
 // SUB-COMPONENT: JSON Endpoint Editor
 // ============================================================================
 function JsonEditor({ endpointKey, data, onSave }) {
-  const [jsonText, setJsonText] = useState(() => JSON.stringify(data, null, 2));
+  const [jsonText, setJsonText] = useState(() => JSON.stringify(data ?? {}, null, 2));
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    setJsonText(JSON.stringify(data, null, 2));
+    setJsonText(JSON.stringify(data ?? {}, null, 2));
     setError(null);
     setSaved(false);
   }, [data, endpointKey]);
@@ -376,6 +376,16 @@ export default function AdminDashboard() {
   const [editingProject, setEditingProject] = useState(null); // null | 'new' | project object
   const [activeEndpoint, setActiveEndpoint] = useState('profile');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+
+  // Fallback to first available endpoint if activeEndpoint does not exist in apiEndpoints
+  useEffect(() => {
+    if (activeEndpoint && portfolioData?.apiEndpoints && !portfolioData.apiEndpoints[activeEndpoint]) {
+      const keys = Object.keys(portfolioData.apiEndpoints);
+      if (keys.length > 0) {
+        setActiveEndpoint(keys[0]);
+      }
+    }
+  }, [activeEndpoint, portfolioData?.apiEndpoints]);
 
   // Close on Escape
   useEffect(() => {

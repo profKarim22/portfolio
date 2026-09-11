@@ -88,23 +88,7 @@ svg {
 .app {
   width: 100%;
   min-height: 100vh;
-  background: radial-gradient(
-      ellipse 80% 50% at 50% -10%,
-      rgba(56, 189, 248, 0.07),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 60% 40% at 85% 60%,
-      rgba(129, 140, 248, 0.05),
-      transparent 55%
-    ),
-    linear-gradient(
-      180deg,
-      #060913 0%,
-      #0a1020 35%,
-      #080d1a 70%,
-      #060913 100%
-    );
+  background: #060913;
   position: relative;
   overflow-x: hidden;
 }
@@ -135,15 +119,15 @@ svg {
   top: -15%;
   left: 50%;
   transform: translateX(-50%);
-  width: 75%;
-  height: 45%;
+  width: 65%;
+  height: 35%;
   background: radial-gradient(
     ellipse,
-    var(--glow-cyan),
+    rgba(56, 189, 248, 0.04),
     transparent 65%
   );
-  filter: blur(90px);
-  opacity: 0.35;
+  filter: blur(100px);
+  opacity: 0.25;
   pointer-events: none;
   z-index: 0;
 }

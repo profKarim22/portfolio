@@ -1,268 +1,144 @@
-import React from "react";
+import React from 'react';
 import {
-  FaNodeJs,
-  FaServer,
-  FaDatabase,
-  FaFigma,
-  FaMobileAlt,
-  FaReact,
-  FaHtml5,
-  FaCss3Alt,
-  FaPython,
-  FaGitAlt,
-  FaGithub,
-  FaLinux,
-  FaNpm,
-  FaBrain,
-  FaTools,
-  FaStar,
-} from "react-icons/fa";
-import {
+  SiNodedotjs,
   SiExpress,
   SiTypescript,
   SiJavascript,
+  SiPostgresql,
   SiMysql,
   SiMongodb,
   SiPrisma,
+  SiRedis,
   SiSocketdotio,
-  SiPostman,
-  SiFlutter,
-  SiDart,
-  SiPandas,
-  SiNumpy,
-  SiScikitlearn,
-  SiAndroidstudio,
-} from "react-icons/si";
-import { VscVscode } from "react-icons/vsc";
-import "../styles/TechStack.css";
+  SiSwagger
+} from 'react-icons/si';
+import {
+  TbApi,
+  TbLayersLinked,
+  TbHierarchy,
+  TbDatabase,
+  TbGauge,
+  TbShieldLock,
+  TbServer2,
+  TbSparkles
+} from 'react-icons/tb';
+import '../styles/TechStack.css';
 
-const primarySpecializations = [
+const skillClusters = [
   {
-    title: "Backend Development",
-    tagline: "Primary Specialization",
-    icon: <FaServer />,
-    badge: "Core Focus",
-    accentColor: "#7bdff2",
+    id: 'runtime',
+    category: 'CORE ARCHITECTURE',
+    meta: 'Primary Execution Layer',
+    title: 'Server Runtimes & Frameworks',
     description:
-      "Architecting reliable APIs, secure authentication, and resilient data processing pipelines.",
+      'Architecting resilient, asynchronous server-side services with non-blocking event loops, modular MVC/Clean architecture, and strict type safety.',
+    accent: '#38bdf8',
+    HeaderIcon: TbServer2,
     skills: [
-      { name: "Node.js", icon: <FaNodeJs /> },
-      { name: "Express.js", icon: <SiExpress /> },
-      { name: "TypeScript", icon: <SiTypescript /> },
-      { name: "JavaScript", icon: <SiJavascript /> },
-      { name: "RESTful APIs", icon: <FaServer /> },
-      { name: "API Development", icon: <FaServer /> },
-      { name: "Auth & RBAC", icon: <FaServer /> },
-      { name: "CRUD Operations", icon: <FaDatabase /> },
-      { name: "Middleware Pipeline", icon: <FaServer /> },
-      { name: "MVC Architecture", icon: <FaServer /> },
-      { name: "Backend Architecture", icon: <FaServer /> },
-      { name: "API Integration", icon: <FaServer /> },
-      { name: "MySQL", icon: <SiMysql /> },
-      { name: "SQL", icon: <FaDatabase /> },
-      { name: "Sequelize ORM", icon: <FaDatabase /> },
-      { name: "Prisma ORM", icon: <SiPrisma /> },
-      { name: "MongoDB", icon: <SiMongodb /> },
-      { name: "Mongoose", icon: <SiMongodb /> },
-      { name: "Socket.IO", icon: <SiSocketdotio /> },
-      { name: "Postman", icon: <SiPostman /> },
-    ],
+      { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'Express.js', icon: SiExpress },
+      { name: 'TypeScript', icon: SiTypescript },
+      { name: 'Modern ES6+', icon: SiJavascript },
+      { name: 'RESTful APIs', icon: TbApi },
+      { name: 'Middleware Pipelines', icon: TbLayersLinked },
+      { name: 'Clean Architecture / MVC', icon: TbHierarchy }
+    ]
   },
   {
-    title: "UI/UX Design",
-    tagline: "Primary Specialization",
-    icon: <FaFigma />,
-    badge: "Core Focus",
-    accentColor: "#b794f4",
+    id: 'persistence',
+    category: 'STORAGE ENGINE',
+    meta: 'Relational & Document',
+    title: 'Data Persistence & Schemas',
     description:
-      "Creating user-centered design systems, interactive prototypes, and intuitive digital interfaces.",
+      'Designing normalized relational schemas, handling ACID transactions, optimized indexing, and efficient ORM integrations.',
+    accent: '#10b981',
+    HeaderIcon: TbDatabase,
     skills: [
-      { name: "UI Design", icon: <FaFigma /> },
-      { name: "UX Design", icon: <FaFigma /> },
-      { name: "Figma", icon: <FaFigma /> },
-      { name: "Wireframing", icon: <FaFigma /> },
-      { name: "Prototyping", icon: <FaFigma /> },
-      { name: "User Flow", icon: <FaFigma /> },
-      { name: "Information Architecture", icon: <FaFigma /> },
-      { name: "Responsive Design", icon: <FaFigma /> },
-      { name: "Design Systems", icon: <FaFigma /> },
-      { name: "Mobile UI Design", icon: <FaMobileAlt /> },
-      { name: "Web UI Design", icon: <FaReact /> },
-    ],
-  },
-];
-
-const supportingCategories = [
-  {
-    title: "Mobile Development",
-    type: "Supporting Skills",
-    icon: <FaMobileAlt />,
-    accentColor: "#10b981",
-    skills: [
-      { name: "Flutter", icon: <SiFlutter /> },
-      { name: "Dart", icon: <SiDart /> },
-      { name: "Mobile App Development", icon: <FaMobileAlt /> },
-      { name: "Flutter UI", icon: <SiFlutter /> },
-      { name: "Responsive Mobile UI", icon: <FaMobileAlt /> },
-      { name: "REST API Integration", icon: <FaServer /> },
-      { name: "JSON", icon: <FaServer /> },
-      { name: "API Integration", icon: <FaServer /> },
-    ],
+      { name: 'PostgreSQL', icon: SiPostgresql },
+      { name: 'MySQL', icon: SiMysql },
+      { name: 'MongoDB', icon: SiMongodb },
+      { name: 'Prisma ORM', icon: SiPrisma },
+      { name: 'Data Modeling & ERD', icon: TbDatabase },
+      { name: 'Query Optimization', icon: TbGauge }
+    ]
   },
   {
-    title: "Web Development",
-    type: "Supporting Skills",
-    icon: <FaReact />,
-    accentColor: "#60a5fa",
+    id: 'distributed',
+    category: 'SERVICES & SECURITY',
+    meta: 'Performance & Access',
+    title: 'Distributed Caching & Security',
+    description:
+      'High-throughput caching strategies, pub/sub messaging patterns, strict RBAC/JWT authentication, and contract-driven API documentation.',
+    accent: '#818cf8',
+    HeaderIcon: TbShieldLock,
     skills: [
-      { name: "HTML5", icon: <FaHtml5 /> },
-      { name: "CSS3", icon: <FaCss3Alt /> },
-      { name: "JavaScript", icon: <SiJavascript /> },
-      { name: "ES6+", icon: <SiJavascript /> },
-      { name: "DOM & BOM", icon: <SiJavascript /> },
-      { name: "React.js", icon: <FaReact /> },
-      { name: "Responsive Web Design", icon: <FaReact /> },
-    ],
-  },
-  {
-    title: "Databases",
-    type: "Data Layer",
-    icon: <FaDatabase />,
-    accentColor: "#f59e0b",
-    skills: [
-      { name: "MySQL", icon: <SiMysql /> },
-      { name: "SQL", icon: <FaDatabase /> },
-      { name: "MongoDB", icon: <SiMongodb /> },
-      { name: "Database Design", icon: <FaDatabase /> },
-      { name: "ERD", icon: <FaDatabase /> },
-      { name: "Sequelize", icon: <FaDatabase /> },
-      { name: "Prisma", icon: <SiPrisma /> },
-    ],
-  },
-  {
-    title: "AI & Machine Learning",
-    type: "Fundamentals",
-    icon: <FaBrain />,
-    accentColor: "#ec4899",
-    skills: [
-      { name: "Python", icon: <FaPython /> },
-      { name: "Pandas", icon: <SiPandas /> },
-      { name: "NumPy", icon: <SiNumpy /> },
-      { name: "Scikit-learn", icon: <SiScikitlearn /> },
-      { name: "Data Preprocessing", icon: <FaBrain /> },
-      { name: "Logistic Regression", icon: <FaBrain /> },
-      { name: "Decision Tree", icon: <FaBrain /> },
-      { name: "Random Forest", icon: <FaBrain /> },
-      { name: "ML Fundamentals", icon: <FaBrain /> },
-    ],
-  },
-  {
-    title: "Tools & Workflow",
-    type: "Environment",
-    icon: <FaTools />,
-    accentColor: "#38bdf8",
-    skills: [
-      { name: "Git", icon: <FaGitAlt /> },
-      { name: "GitHub", icon: <FaGithub /> },
-      { name: "VS Code", icon: <VscVscode /> },
-      { name: "Postman", icon: <SiPostman /> },
-      { name: "Figma", icon: <FaFigma /> },
-      { name: "MySQL Workbench", icon: <SiMysql /> },
-      { name: "MongoDB Compass", icon: <SiMongodb /> },
-      { name: "Linux", icon: <FaLinux /> },
-      { name: "Android Studio", icon: <SiAndroidstudio /> },
-      { name: "npm", icon: <FaNpm /> },
-    ],
-  },
+      { name: 'Redis (Caching & Pub/Sub)', icon: SiRedis },
+      { name: 'JWT & OAuth2 / RBAC', icon: TbShieldLock },
+      { name: 'Socket.IO (WebSockets)', icon: SiSocketdotio },
+      { name: 'API Security & Rate Limiting', icon: TbShieldLock },
+      { name: 'OpenAPI / Swagger', icon: SiSwagger }
+    ]
+  }
 ];
 
 export default function TechStack() {
   return (
-    <section className="section techstack-section" id="skills">
-      <div className="container">
-        <div className="section-header">
-          <span className="section-label">// Technical Arsenal</span>
-          <h2 className="section-title">Skills &amp; Specializations</h2>
-          <p className="section-subtitle">
-            Grouped technical capabilities with primary emphasis on Backend Architecture and UI/UX Design
+    <section id="skills" className="techstack-section">
+      <div className="techstack-container">
+        {/* Section Header */}
+        <div className="techstack-header-wrap">
+          <div className="techstack-domain-badge">
+            <TbSparkles className="star-icon" />
+            <span>PRIMARY DOMAIN: BACKEND &amp; ARCHITECTURE (CORE — 80%)</span>
+          </div>
+          <h2 className="techstack-main-title">Skills &amp; Specializations</h2>
+          <p className="techstack-lead-desc">
+            An unambiguous technical hierarchy emphasizing Core Backend Architecture, Distributed Systems, and Secure Data Persistence.
           </p>
         </div>
 
-        {/* PRIMARY SPECIALIZATIONS — Highlighted Banner */}
-        <div className="specializations-wrapper">
-          <div className="tier-header">
-            <span className="tier-pill primary-tier">
-              <FaStar className="tier-star" /> Primary Specializations
-            </span>
-          </div>
-
-          <div className="primary-grid">
-            {primarySpecializations.map((item, idx) => (
+        {/* 3 Unified Skill Cards */}
+        <div className="techstack-cards-grid">
+          {skillClusters.map((cluster) => {
+            const HeaderIcon = cluster.HeaderIcon;
+            return (
               <div
-                key={idx}
-                className="primary-card glass-card"
-                style={{ "--card-accent": item.accentColor }}
+                key={cluster.id}
+                className="techstack-card"
+                style={{ '--cluster-accent': cluster.accent }}
               >
-                <div className="primary-card-header">
-                  <div className="primary-icon-wrap">{item.icon}</div>
-                  <div className="primary-meta">
-                    <div className="badge-row">
-                      <span className="primary-badge">{item.badge}</span>
-                      <span className="primary-tagline">{item.tagline}</span>
-                    </div>
-                    <h3 className="primary-card-title">{item.title}</h3>
+                {/* Top Unified Header */}
+                <div className="cluster-header-bar">
+                  <div className="cluster-icon-box">
+                    <HeaderIcon className="cluster-svg" />
+                  </div>
+
+                  {/* Symmetrical Header Pill Group */}
+                  <div className="cluster-pill-group">
+                    <span className="cluster-primary-pill">{cluster.category}</span>
+                    <span className="cluster-meta-label">{cluster.meta}</span>
                   </div>
                 </div>
 
-                <p className="primary-card-desc">{item.description}</p>
+                {/* Title & Description */}
+                <h3 className="cluster-title">{cluster.title}</h3>
+                <p className="cluster-description">{cluster.description}</p>
 
-                <div className="skills-badge-wrap">
-                  {item.skills.map((skill, i) => (
-                    <span className="skill-pill primary-pill" key={i}>
-                      <span className="skill-icon">{skill.icon}</span>
-                      <span>{skill.name}</span>
-                    </span>
-                  ))}
+                {/* Skills Tags List */}
+                <div className="cluster-skills-list">
+                  {cluster.skills.map((skill, index) => {
+                    const SkillIcon = skill.icon;
+                    return (
+                      <div key={index} className="skill-chip-pill">
+                        {SkillIcon && <SkillIcon className="skill-chip-icon" />}
+                        <span className="skill-chip-name">{skill.name}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* SUPPORTING & FOUNDATIONAL CATEGORIES */}
-        <div className="supporting-wrapper">
-          <div className="tier-header">
-            <span className="tier-pill supporting-tier">
-              Supporting Capabilities &amp; Fundamentals
-            </span>
-          </div>
-
-          <div className="supporting-grid">
-            {supportingCategories.map((cat, idx) => (
-              <div
-                key={idx}
-                className="supporting-card glass-card"
-                style={{ "--cat-accent": cat.accentColor }}
-              >
-                <div className="supporting-card-header">
-                  <div className="supporting-icon">{cat.icon}</div>
-                  <div>
-                    <span className="supporting-type">{cat.type}</span>
-                    <h4 className="supporting-title">{cat.title}</h4>
-                  </div>
-                </div>
-
-                <div className="skills-badge-wrap">
-                  {cat.skills.map((skill, i) => (
-                    <span className="skill-pill supporting-pill" key={i}>
-                      <span className="skill-icon">{skill.icon}</span>
-                      <span>{skill.name}</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
