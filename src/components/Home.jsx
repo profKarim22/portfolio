@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import Badge3D from "./Badge3D";
 import { FaTerminal, FaCopy, FaCheck } from "react-icons/fa";
+import { usePortfolio } from "../context/PortfolioContext";
 import "../styles/Home.css";
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
+  const { portfolioData } = usePortfolio();
+  
+  const defaultProfile = {
+    engineer: "Karim Abbas Elashiry",
+    standing: "Level 04 CS Senior (HICIS 6th of Oct)",
+    role: "Backend Developer & Computer Science Senior",
+    stack: ["Node.js", "Express", "MySQL", "MongoDB"],
+    status: "Available for Engineering Roles",
+  };
+
+  const profileData = portfolioData?.profile || defaultProfile;
 
   const handleCopyProfile = () => {
-    const profileJson = JSON.stringify(
-      {
-        engineer: "Karim Abbas Elashiry",
-        standing: "Level 04 CS Senior (HICIS 6th of Oct)",
-        role: "Backend Developer & Computer Science Senior",
-        stack: ["Node.js", "Express", "MySQL", "MongoDB"],
-        status: "Available for Engineering Roles",
-      },
-      null,
-      2
-    );
+    const profileJson = JSON.stringify(profileData, null, 2);
     navigator.clipboard.writeText(profileJson);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -57,10 +59,10 @@ export default function Home() {
           {/* 2. Main Title */}
           <div className="bio-heading-group">
             <h1 className="bio-name">
-              Karim Abbas <span className="text-accent">Elashiry</span>
+              {profileData.engineer.split(' ')[0]} <span className="text-accent">{profileData.engineer.split(' ').slice(1).join(' ')}</span>
             </h1>
             <p className="bio-role-subtitle">
-              Backend Developer &amp; Computer Science Senior
+              {profileData.role}
             </p>
           </div>
 
@@ -68,7 +70,7 @@ export default function Home() {
           <p className="bio-summary-text">
             Senior Computer Science student at the <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
             Building robust backend systems, scalable APIs, and data-driven applications
-            with Node.js, Express.js, SQL, and NoSQL technologies.
+            with {profileData.stack.slice(0, -1).join(', ')}, and {profileData.stack[profileData.stack.length - 1]} technologies.
           </p>
 
           {/* 4. Structured Architecture Highlights */}
@@ -122,16 +124,7 @@ export default function Home() {
                 <span className="t-flag">-s</span>{" "}
                 <span className="t-url">https://karim.dev/api/v1/profile</span>
                 {"\n"}
-                <span className="t-response">
-                  {`{`}
-                  {"\n"}
-                  {"  "}<span className="t-key">"engineer"</span>: <span className="t-string">"Karim Abbas Elashiry"</span>,{"\n"}
-                  {"  "}<span className="t-key">"standing"</span>: <span className="t-string">"Level 04 CS Senior (HICIS 6th of Oct)"</span>,{"\n"}
-                  {"  "}<span className="t-key">"role"</span>: <span className="t-string">"Backend Developer & Computer Science Senior"</span>,{"\n"}
-                  {"  "}<span className="t-key">"stack"</span>: <span className="t-string">["Node.js", "Express", "MySQL", "MongoDB"]</span>,{"\n"}
-                  {"  "}<span className="t-key">"status"</span>: <span className="t-string">"Available for Engineering Roles"</span>{"\n"}
-                  {`}`}
-                </span>
+                <span className="t-response" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileData, null, 2).replace(/"([^"]+)":/g, '<span class="t-key">"$1"</span>:').replace(/: "([^"]+)"/g, ': <span class="t-string">"$1"</span>').replace(/\[(.*?)\]/g, '<span class="t-string">[$1]</span>') }} />
               </code>
             </div>
           </div>
