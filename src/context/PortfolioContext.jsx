@@ -1,155 +1,149 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import defaultData from '../data/defaultProjects.json';
+import * as api from '../services/api';
 
 const PortfolioContext = createContext();
 
-const STORAGE_KEY = 'karim_portfolio_data';
-const PROJECTS_KEY = 'portfolio_projects';
-
-const defaultProjects = defaultData.projects || [];
-
-export const loadInitialProjects = () => {
-  try {
-    const savedProjects = localStorage.getItem(PROJECTS_KEY);
-    const savedData = localStorage.getItem(STORAGE_KEY);
-
-    let parsed = null;
-    if (savedProjects) {
-      parsed = JSON.parse(savedProjects);
-    } else if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      if (Array.isArray(parsedData?.projects)) {
-        parsed = parsedData.projects;
-      }
-    }
-
-    if (!parsed || !Array.isArray(parsed)) return defaultProjects;
-
-    // Merge strategy: ensure all items from defaultProjects exist in state
-    const savedIds = new Set(parsed.map((p) => p.id));
-    const missingDefaults = defaultProjects.filter((p) => !savedIds.has(p.id));
-
-    return [...missingDefaults, ...parsed];
-  } catch (e) {
-    console.warn("Error parsing saved projects, falling back to defaults", e);
-    return defaultProjects;
-  }
-};
-
 export function PortfolioProvider({ children }) {
-  const [portfolioData, setPortfolioData] = useState(() => {
-    const initialProjects = loadInitialProjects();
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Force profile, skills, projects, and status from defaults to prevent stale localStorage data
-        return {
-          ...defaultData,
-          ...parsed,
-          projects: initialProjects,
-          apiEndpoints: {
-            ...defaultData.apiEndpoints,
-            ...(parsed.apiEndpoints || {}),
-            profile: defaultData.apiEndpoints.profile,
-            skills: defaultData.apiEndpoints.skills,
-            projects: defaultData.apiEndpoints.projects,
-            status: defaultData.apiEndpoints.status,
-          },
-          statusConfig: {
-            ...defaultData.statusConfig,
-            ...(parsed.statusConfig || {}),
-            modes: {
-              ...defaultData.statusConfig.modes,
-              ...(parsed.statusConfig?.modes || {}),
-            },
-          },
-        };
-      }
-    } catch (e) {
-      console.warn('Failed to load saved portfolio data:', e);
-    }
-    return {
-      ...defaultData,
-      projects: initialProjects,
-    };
+  const [portfolioData, setPortfolioData] = useState({
+    profile: null,
+    projects: [],
+    skills: null,
+    statusConfig: { mode: 'online' },
+    apiEndpoints: {}
   });
+  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-  // Persist to localStorage on every change
-  useEffect(() => {
+  // Fetch initial data from backend
+  const fetchAllData = useCallback(async () => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
-      localStorage.setItem(PROJECTS_KEY, JSON.stringify(portfolioData.projects));
-    } catch (e) {
-      console.warn('Failed to save portfolio data:', e);
-    }
-  }, [portfolioData]);
+      setLoading(true);
+      const [profileData, projectsData, skillsData, statusData] = await Promise.all([
+        api.getProfile().catch(() => null),
+        api.getProjects().catch(() => []),
+        api.getSkills().catch(() => null),
+        api.getStatus().catch(() => ({ mode: 'online' }))
+      ]);
 
-  // ── Project CRUD ──
+      setPortfolioData({
+        profile: profileData?.data || profileData || null,
+        projects: projectsData?.data || projectsData || [],
+        skills: skillsData?.data || skillsData || null,
+        statusConfig: statusData?.data || statusData || { mode: 'online' },
+        apiEndpoints: {} // Will be fetched on demand by ApiTerminal
+      });
+      setError(null);
+    } catch (err) {
+      console.error('Failed to load portfolio data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
+
+  // ── Project Actions (Optimistic UI + API call) ──
   const updateProjects = useCallback((newProjects) => {
     setPortfolioData((prev) => ({ ...prev, projects: newProjects }));
   }, []);
 
-  const addProject = useCallback((project) => {
-    setPortfolioData((prev) => ({
-      ...prev,
-      projects: [...prev.projects, { ...project, id: `project-${Date.now()}` }],
-    }));
+  const addProject = useCallback(async (project) => {
+    try {
+      const result = await api.createProject(project);
+      const newProject = result.data || result;
+      setPortfolioData((prev) => ({
+        ...prev,
+        projects: [...prev.projects, newProject]
+      }));
+    } catch (err) {
+      console.error('Failed to add project:', err);
+      throw err;
+    }
   }, []);
 
-  const editProject = useCallback((projectId, updatedProject) => {
-    setPortfolioData((prev) => ({
-      ...prev,
-      projects: prev.projects.map((p) =>
-        p.id === projectId ? { ...p, ...updatedProject } : p
-      ),
-    }));
+  const editProject = useCallback(async (projectId, updatedProject) => {
+    try {
+      const result = await api.updateProject(projectId, updatedProject);
+      const savedProject = result.data || result;
+      setPortfolioData((prev) => ({
+        ...prev,
+        projects: prev.projects.map((p) => (p._id === projectId || p.id === projectId) ? savedProject : p)
+      }));
+    } catch (err) {
+      console.error('Failed to update project:', err);
+      throw err;
+    }
   }, []);
 
-  const deleteProject = useCallback((projectId) => {
-    setPortfolioData((prev) => ({
-      ...prev,
-      projects: prev.projects.filter((p) => p.id !== projectId),
-    }));
+  const deleteProject = useCallback(async (projectId) => {
+    try {
+      await api.deleteProject(projectId);
+      setPortfolioData((prev) => ({
+        ...prev,
+        projects: prev.projects.filter((p) => p._id !== projectId && p.id !== projectId)
+      }));
+    } catch (err) {
+      console.error('Failed to delete project:', err);
+      throw err;
+    }
   }, []);
 
-  const reorderProject = useCallback((index, direction) => {
+  const reorderProject = useCallback(async (index, direction) => {
     setPortfolioData((prev) => {
       const projects = [...prev.projects];
       const newIndex = index + direction;
       if (newIndex < 0 || newIndex >= projects.length) return prev;
       [projects[index], projects[newIndex]] = [projects[newIndex], projects[index]];
+      
+      // Sync reorder to backend
+      api.reorderProjects(projects.map(p => p._id || p.id)).catch(err => console.error('Failed to sync reorder', err));
+      
       return { ...prev, projects };
     });
   }, []);
 
-  // ── API Endpoints ──
-  const updateApiEndpoint = useCallback((key, data) => {
-    setPortfolioData((prev) => ({
-      ...prev,
-      apiEndpoints: { ...prev.apiEndpoints, [key]: data },
-    }));
+  // ── API Endpoints (Admin specific) ──
+  const updateApiEndpoint = useCallback(async (key, data) => {
+    try {
+      await api.updateApiEndpoint(key, data);
+      setPortfolioData((prev) => ({
+        ...prev,
+        apiEndpoints: { ...prev.apiEndpoints, [key]: data }
+      }));
+    } catch (err) {
+      console.error('Failed to update api endpoint:', err);
+      throw err;
+    }
   }, []);
 
   // ── Status ──
-  const updateStatus = useCallback((mode) => {
-    setPortfolioData((prev) => ({
-      ...prev,
-      statusConfig: { ...prev.statusConfig, mode },
-    }));
+  const updateStatus = useCallback(async (statusData) => {
+    try {
+      const result = await api.updateStatus(statusData);
+      setPortfolioData((prev) => ({
+        ...prev,
+        statusConfig: result.data || result
+      }));
+    } catch (err) {
+      console.error('Failed to update status:', err);
+      throw err;
+    }
   }, []);
 
-  // ── Reset ──
+  // ── Reset/Export (Admin features) ──
   const resetToDefault = useCallback(() => {
-    setPortfolioData(defaultData);
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(PROJECTS_KEY);
-  }, []);
+    // With a real backend, reset might mean re-seeding the DB.
+    // For now, just refetch from backend.
+    fetchAllData();
+  }, [fetchAllData]);
 
-  // ── Export ──
   const exportData = useCallback(() => {
     const blob = new Blob([JSON.stringify(portfolioData, null, 2)], {
       type: 'application/json',
@@ -157,7 +151,7 @@ export function PortfolioProvider({ children }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'portfolio-data.json';
+    a.download = 'portfolio-data-export.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -168,6 +162,9 @@ export function PortfolioProvider({ children }) {
     <PortfolioContext.Provider
       value={{
         portfolioData,
+        loading,
+        error,
+        refreshData: fetchAllData,
         updateProjects,
         addProject,
         editProject,

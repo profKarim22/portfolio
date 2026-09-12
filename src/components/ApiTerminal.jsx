@@ -32,27 +32,39 @@ function highlightJSON(obj) {
 // ============================================================================
 // 2. SLEEK & STREAMLINED API EXPLORER / TERMINAL COMPONENT
 // ============================================================================
+import * as api from '../services/api';
+
 export default function ApiTerminal() {
-  const { portfolioData } = usePortfolio();
   const [activeRoute, setActiveRoute] = useState("profile");
   const [copied, setCopied] = useState(false);
+  const [activeData, setActiveData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Build endpoints from context data
-  const ENDPOINTS = useMemo(() => {
-    const endpoints = { ...(portfolioData?.apiEndpoints || {}) };
-    return endpoints;
-  }, [portfolioData?.apiEndpoints]);
-
-  const activeData = useMemo(
-    () => (activeRoute && ENDPOINTS[activeRoute]) ? ENDPOINTS[activeRoute] : (ENDPOINTS.profile || {}),
-    [activeRoute, ENDPOINTS]
-  );
+  // Available routes for the terminal
+  const ROUTES = ["profile", "projects", "skills", "status"];
 
   useEffect(() => {
-    if (activeRoute && !ENDPOINTS[activeRoute]) {
-      setActiveRoute("profile");
-    }
-  }, [activeRoute, ENDPOINTS]);
+    let isMounted = true;
+    
+    const fetchEndpointData = async () => {
+      setIsLoading(true);
+      try {
+        const res = await api.getApiEndpoint(activeRoute);
+        if (isMounted) {
+          setActiveData(res.data || res);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setActiveData({ error: `Failed to fetch /api/v1/${activeRoute}`, details: err.message });
+        }
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    fetchEndpointData();
+    return () => { isMounted = false; };
+  }, [activeRoute]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(activeData, null, 2));
@@ -79,7 +91,7 @@ export default function ApiTerminal() {
           {/* Left Sidebar: Minimalist Route Buttons */}
           <aside className="api-sidebar">
             <div className="sidebar-routes">
-              {Object.keys(ENDPOINTS).map((route) => {
+              {ROUTES.map((route) => {
                 const isActive = activeRoute === route;
                 return (
                   <button

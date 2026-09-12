@@ -619,7 +619,7 @@ export default function AdminDashboard() {
               </div>
               <div className="api-editor-layout">
                 <div className="api-endpoint-tabs">
-                  {Object.keys(apiEndpoints).map((key) => (
+                  {['profile', 'projects', 'skills', 'status'].map((key) => (
                     <button
                       key={key}
                       className={`api-ep-tab ${activeEndpoint === key ? 'active' : ''}`}

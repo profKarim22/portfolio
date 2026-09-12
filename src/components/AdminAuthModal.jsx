@@ -1,16 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
+import * as api from '../services/api';
 
-// SHA-256 hash of "admin123"
-const ADMIN_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
-
-async function hashPassword(input) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(input);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-}
 
 export default function AdminAuthModal() {
   const { isAuthOpen, setIsAuthOpen, setIsAdminOpen } = usePortfolio();
@@ -69,12 +60,11 @@ export default function AdminAuthModal() {
 
     setStatus('checking');
 
-    // Small delay for dramatic effect
-    await new Promise((r) => setTimeout(r, 400));
-
-    const hash = await hashPassword(password);
-
-    if (hash === ADMIN_HASH) {
+    try {
+      // We use a default admin email since the UI only asks for a passkey
+      const email = import.meta.env.VITE_ADMIN_EMAIL || 'admin@example.com';
+      await api.loginAdmin(email, password);
+      
       setStatus('granted');
       setTimeout(() => {
         setIsAuthOpen(false);
@@ -83,7 +73,7 @@ export default function AdminAuthModal() {
         setStatus('idle');
         setAttempts(0);
       }, 1500);
-    } else {
+    } catch (err) {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
       setStatus('denied');
