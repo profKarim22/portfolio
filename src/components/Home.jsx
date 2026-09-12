@@ -7,7 +7,7 @@ import "../styles/Home.css";
 export default function Home() {
   const [copied, setCopied] = useState(false);
   const { portfolioData } = usePortfolio();
-  
+
   const defaultProfile = {
     engineer: "Karim Abbas Elashiry",
     standing: "Level 04 CS Senior (HICIS 6th of Oct)",
@@ -59,18 +59,21 @@ export default function Home() {
           {/* 2. Main Title */}
           <div className="bio-heading-group">
             <h1 className="bio-name">
-              {profileData.engineer.split(' ')[0]} <span className="text-accent">{profileData.engineer.split(' ').slice(1).join(' ')}</span>
+              {profileData.engineer.split(" ")[0]}{" "}
+              <span className="text-accent">
+                {profileData.engineer.split(" ").slice(1).join(" ")}
+              </span>
             </h1>
-            <p className="bio-role-subtitle">
-              {profileData.role}
-            </p>
+            <p className="bio-role-subtitle">{profileData.role}</p>
           </div>
 
           {/* 3. Concise 2-Sentence Bio */}
           <p className="bio-summary-text">
-            Senior Computer Science student at the <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
-            Building robust backend systems, scalable APIs, and data-driven applications
-            with {profileData.stack.slice(0, -1).join(', ')}, and {profileData.stack[profileData.stack.length - 1]} technologies.
+            Senior Computer Science student at the{" "}
+            <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
+            Building robust backend systems, scalable APIs, and data-driven
+            applications with {profileData.stack.slice(0, -1).join(", ")}, and{" "}
+            {profileData.stack[profileData.stack.length - 1]} technologies.
           </p>
 
           {/* 4. Structured Architecture Highlights */}
@@ -78,7 +81,8 @@ export default function Home() {
             <div className="bio-highlight-item">
               <span className="highlight-icon">⚡</span>
               <div className="highlight-text">
-                <strong>Core Runtime:</strong> Node.js, Express &amp; RESTful APIs
+                <strong>Core Runtime:</strong> Node.js, Express &amp; RESTful
+                APIs
               </div>
             </div>
 
@@ -92,7 +96,8 @@ export default function Home() {
             <div className="bio-highlight-item">
               <span className="highlight-icon">🛡️</span>
               <div className="highlight-text">
-                <strong>Architecture:</strong> Server-Side Design &amp; API Security
+                <strong>Architecture:</strong> Server-Side Design &amp; API
+                Security
               </div>
             </div>
           </div>
@@ -120,11 +125,29 @@ export default function Home() {
             </div>
             <div className="terminal-body">
               <code>
-                <span className="t-prompt">$</span> <span className="t-cmd">curl</span>{" "}
+                <span className="t-prompt">$</span>{" "}
+                <span className="t-cmd">curl</span>{" "}
                 <span className="t-flag">-s</span>{" "}
                 <span className="t-url">https://karim.dev/api/v1/profile</span>
                 {"\n"}
-                <span className="t-response" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileData, null, 2).replace(/"([^"]+)":/g, '<span class="t-key">"$1"</span>:').replace(/: "([^"]+)"/g, ': <span class="t-string">"$1"</span>').replace(/\[(.*?)\]/g, '<span class="t-string">[$1]</span>') }} />
+                <span
+                  className="t-response"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(profileData, null, 2)
+                      .replace(
+                        /"([^"]+)":/g,
+                        '<span class="t-key">"$1"</span>:',
+                      )
+                      .replace(
+                        /: "([^"]+)"/g,
+                        ': <span class="t-string">"$1"</span>',
+                      )
+                      .replace(
+                        /\[(.*?)\]/g,
+                        '<span class="t-string">[$1]</span>',
+                      ),
+                  }}
+                />
               </code>
             </div>
           </div>
@@ -144,4 +167,3 @@ export default function Home() {
     </section>
   );
 }
-
