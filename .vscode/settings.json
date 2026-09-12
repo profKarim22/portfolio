@@ -1,0 +1,22 @@
+{
+  "cSpell.words": [
+    "Elashiry",
+    "HICIS",
+    "Karim",
+    "Socketdotio",
+    "SiNodedotjs",
+    "techstack",
+    "autoplay",
+    "EXIF",
+    "glassmorphism",
+    "WCAG",
+    "rgba",
+    "offgrid"
+  ],
+  "files.watcherExclude": {
+    "**/build/**": true
+  },
+  "search.exclude": {
+    "**/build": true
+  }
+}
