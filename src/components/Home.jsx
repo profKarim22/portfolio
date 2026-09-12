@@ -83,7 +83,7 @@ export default function Home() {
             <div className="bio-highlight-item">
               <span className="highlight-icon">🗄️</span>
               <div className="highlight-text">
-                <strong>Data Persistence:</strong> MySQL, MongoDB &amp; Prisma ORM
+                <strong>Data Persistence:</strong> MySQL, MongoDB &amp; Mongoose
               </div>
             </div>
 

@@ -7,7 +7,7 @@ import {
   SiPostgresql,
   SiMysql,
   SiMongodb,
-  SiPrisma,
+  SiMongoose,
   SiRedis,
   SiSocketdotio,
   SiSwagger
@@ -57,7 +57,7 @@ const skillClusters = [
       { name: 'PostgreSQL', icon: SiPostgresql },
       { name: 'MySQL', icon: SiMysql },
       { name: 'MongoDB', icon: SiMongodb },
-      { name: 'Prisma ORM', icon: SiPrisma },
+      { name: 'Mongoose', icon: SiMongoose },
       { name: 'Data Modeling & ERD', icon: TbDatabase },
       { name: 'Query Optimization', icon: TbGauge }
     ]

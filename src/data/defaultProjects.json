@@ -163,7 +163,7 @@
           "RESTful APIs",
           "JWT & Authentication"
         ],
-        "databases": ["SQL", "NoSQL", "MySQL", "MongoDB", "Prisma ORM"],
+        "databases": ["SQL", "NoSQL", "MySQL", "MongoDB", "Mongoose"],
         "systems_foundation": [
           "C++",
           "Object-Oriented Programming",
@@ -192,7 +192,7 @@
         "RESTful APIs",
         "JWT & Authentication"
       ],
-      "backend_tools_and_data": ["Prisma ORM", "Postman"],
+      "backend_tools_and_data": ["Mongoose", "Postman"],
       "foundations_and_algorithms": [
         "C++",
         "Object-Oriented Programming (OOP)",
