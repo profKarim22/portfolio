@@ -80,10 +80,44 @@ export default function AdminLayout() {
     };
   }, []);
 
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isSidebarOpen]);
+
+  // Escape key closes mobile drawer
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   // Close mobile drawer on route change
   useEffect(() => {
     setIsSidebarOpen(false);
   }, [location.pathname]);
+
+  // Auto-close drawer if resized to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -134,38 +168,31 @@ export default function AdminLayout() {
           <div
             className="admin-sidebar-backdrop"
             onClick={() => setIsSidebarOpen(false)}
+            aria-hidden="true"
           />
         )}
 
-        {/* Sidebar */}
+        {/* Sidebar / Mobile Navigation Drawer */}
         <aside
+          id="admin-navigation-drawer"
           className={`admin-sidebar ${isCollapsed ? "collapsed" : ""} ${isSidebarOpen ? "open" : ""}`}
+          role="navigation"
+          aria-label="Admin Navigation"
         >
           <div className="admin-sidebar-header">
-            {isCollapsed ? (
-              <button
-                type="button"
-                className="admin-logo-link collapsed-logo-btn"
-                onClick={() => setIsCollapsed(false)}
-                title="Expand sidebar"
-                aria-label="Expand sidebar"
-                style={{ background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }}
-              >
-                <div className="admin-logo-mark">K</div>
-              </button>
-            ) : (
-              <Link
-                to="/admin/dashboard"
-                className="admin-logo-link"
-                title="Control Center"
-              >
-                <div className="admin-logo-mark">K</div>
-                <div className="admin-logo-text">
-                  <span className="admin-logo-title">Control Center</span>
-                  <span className="admin-logo-env">REST API // SEC</span>
-                </div>
-              </Link>
-            )}
+            {/* Desktop Brand / Collapsed Logo */}
+            <Link
+              to="/admin/dashboard"
+              className="admin-logo-link"
+              title="Control Center"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <div className="admin-logo-mark">K</div>
+              <div className="admin-logo-text">
+                <span className="admin-logo-title">Control Center</span>
+                <span className="admin-logo-env">REST API // SEC</span>
+              </div>
+            </Link>
 
             {/* Desktop Collapse Toggle */}
             <button
@@ -176,14 +203,22 @@ export default function AdminLayout() {
             >
               {isCollapsed ? <FaChevronRight /> : <FaChevronLeft />}
             </button>
+
+            {/* Mobile Drawer Close Button */}
+            <button
+              className="admin-drawer-close-btn"
+              onClick={() => setIsSidebarOpen(false)}
+              title="Close navigation drawer"
+              aria-label="Close navigation drawer"
+            >
+              <FaTimes />
+            </button>
           </div>
 
           <nav className="admin-sidebar-nav">
             {navGroups.map((group) => (
               <div key={group.group} className="sidebar-nav-group">
-                {!isCollapsed && (
-                  <div className="sidebar-group-title">{group.group}</div>
-                )}
+                <div className="sidebar-group-title">{group.group}</div>
                 {group.items.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -194,12 +229,10 @@ export default function AdminLayout() {
                         `admin-nav-item ${isActive ? "active" : ""}`
                       }
                       end={item.exact}
-                      title={isCollapsed ? item.label : undefined}
+                      onClick={() => setIsSidebarOpen(false)}
                     >
                       <Icon className="admin-nav-icon" />
-                      {!isCollapsed && (
-                        <span className="admin-nav-label">{item.label}</span>
-                      )}
+                      <span className="admin-nav-label">{item.label}</span>
                     </NavLink>
                   );
                 })}
@@ -215,25 +248,24 @@ export default function AdminLayout() {
               <div className="user-avatar">
                 {user?.email?.[0]?.toUpperCase() || "A"}
               </div>
-              {!isCollapsed && (
-                <div className="user-details">
-                  <span className="user-email">
-                    {user?.email || "Administrator"}
-                  </span>
-                  <span className="user-role">
-                    {user?.role?.toUpperCase() || "ADMIN"}
-                  </span>
-                </div>
-              )}
+              <div className="user-details">
+                <span className="user-email">
+                  {user?.email || "Administrator"}
+                </span>
+                <span className="user-role">
+                  {user?.role?.toUpperCase() || "ADMIN"}
+                </span>
+              </div>
             </div>
 
             <button
               onClick={handleLogout}
               className="admin-logout-btn"
               title="Sign out"
+              aria-label="Sign out"
             >
               <FaSignOutAlt />
-              {!isCollapsed && <span>Logout</span>}
+              <span className="logout-text">Logout</span>
             </button>
           </div>
         </aside>
@@ -249,6 +281,8 @@ export default function AdminLayout() {
                 className="admin-hamburger"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                 aria-label="Toggle Navigation"
+                aria-expanded={isSidebarOpen}
+                aria-controls="admin-navigation-drawer"
               >
                 <FaBars />
               </button>

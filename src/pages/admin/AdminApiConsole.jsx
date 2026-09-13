@@ -141,7 +141,7 @@ export default function AdminApiConsole() {
 
         {/* Toolbar */}
         <div className="api-console-toolbar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div className="api-toolbar-status">
             {jsonError ? (
               <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--adm-danger)', fontSize: '0.75rem', fontFamily: 'var(--adm-font-mono)' }}>
                 <FaExclamationTriangle />
@@ -155,7 +155,7 @@ export default function AdminApiConsole() {
             )}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div className="api-toolbar-actions">
             <button
               type="button"
               onClick={handleFormat}
@@ -199,7 +199,7 @@ export default function AdminApiConsole() {
         </div>
 
         {/* Editor Area */}
-        <div style={{ position: 'relative' }}>
+        <div className="api-editor-wrapper" style={{ position: 'relative' }}>
           {isLoading && (
             <div
               style={{

@@ -119,29 +119,29 @@ export default function AdminProfile() {
 
             {/* Telemetry specs list */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', padding: '0.45rem 0', borderBottom: '1px solid var(--adm-border-subtle)' }}>
-                <span style={{ color: 'var(--adm-text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <div className="profile-spec-row">
+                <span className="profile-spec-label">
                   <FaIdBadge /> Admin Identifier:
                 </span>
-                <span style={{ fontFamily: 'var(--adm-font-mono)', color: 'var(--adm-text-primary)' }}>
+                <span className="profile-spec-val mono">
                   {user?.id || 'Primary Root Admin'}
                 </span>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', padding: '0.45rem 0', borderBottom: '1px solid var(--adm-border-subtle)' }}>
-                <span style={{ color: 'var(--adm-text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <div className="profile-spec-row">
+                <span className="profile-spec-label">
                   <FaServer /> Session Authority:
                 </span>
-                <span style={{ color: 'var(--adm-text-primary)' }}>
+                <span className="profile-spec-val">
                   Vercel Serverless REST Backend
                 </span>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', padding: '0.45rem 0' }}>
-                <span style={{ color: 'var(--adm-text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <div className="profile-spec-row">
+                <span className="profile-spec-label">
                   <FaLock /> Token Management:
                 </span>
-                <span style={{ color: 'var(--adm-text-secondary)', fontSize: '0.75rem' }}>
+                <span className="profile-spec-val sub">
                   In-Memory Bearer (Never in localStorage)
                 </span>
               </div>

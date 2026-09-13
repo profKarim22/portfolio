@@ -396,14 +396,7 @@ export default function AdminOverview() {
             </div>
 
             {/* Quick Actions Bar */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "0.65rem",
-                marginTop: "0.25rem",
-              }}
-            >
+            <div className="overview-quick-actions">
               <Link
                 to="/admin/projects/new"
                 className="btn-primary-action"

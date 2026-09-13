@@ -320,21 +320,20 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
           <p>Engineering throughput, latency, or scale indicators</p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+        <div className="form-metrics-container">
           {form.metrics.map((metric, idx) => (
-            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div key={idx} className="metric-row-item">
               <input
                 type="text"
-                className="form-input"
-                style={{ flex: 1 }}
+                className="form-input metric-label-input"
                 value={metric.label}
                 onChange={(e) => updateMetric(idx, 'label', e.target.value)}
                 placeholder="Metric Label (e.g. Throughput)"
               />
               <input
                 type="text"
-                className="form-input"
-                style={{ flex: 1, fontFamily: 'var(--adm-font-mono)' }}
+                className="form-input metric-value-input"
+                style={{ fontFamily: 'var(--adm-font-mono)' }}
                 value={metric.value}
                 onChange={(e) => updateMetric(idx, 'value', e.target.value)}
                 placeholder="Value (e.g. 5,000 Req/s)"
@@ -342,8 +341,9 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
               <button
                 type="button"
                 onClick={() => removeMetric(idx)}
-                className="btn-table-action delete"
+                className="btn-table-action delete btn-metric-delete"
                 title="Remove metric"
+                aria-label="Remove metric"
                 disabled={form.metrics.length <= 1}
                 style={{ opacity: form.metrics.length <= 1 ? 0.3 : 1 }}
               >
@@ -355,8 +355,7 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
           <button
             type="button"
             onClick={addMetric}
-            className="btn-secondary-action"
-            style={{ alignSelf: 'flex-start', marginTop: '0.25rem' }}
+            className="btn-secondary-action btn-add-field"
           >
             <FaPlus /> <span>Add Metric Field</span>
           </button>
@@ -372,13 +371,12 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
 
         <div className="form-group">
           <label>Highlights List</label>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+          <div className="form-highlights-container">
             {form.highlights.map((highlight, idx) => (
-              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <div key={idx} className="highlight-row-item">
                 <input
                   type="text"
-                  className="form-input"
-                  style={{ flex: 1 }}
+                  className="form-input highlight-input"
                   value={highlight}
                   onChange={(e) => updateHighlight(idx, e.target.value)}
                   placeholder="e.g. Real-time digital canvas rendering at locked 60 FPS"
@@ -386,8 +384,9 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
                 <button
                   type="button"
                   onClick={() => removeHighlight(idx)}
-                  className="btn-table-action delete"
+                  className="btn-table-action delete btn-highlight-delete"
                   title="Remove highlight"
+                  aria-label="Remove highlight"
                   disabled={form.highlights.length <= 1}
                   style={{ opacity: form.highlights.length <= 1 ? 0.3 : 1 }}
                 >
@@ -398,8 +397,7 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
             <button
               type="button"
               onClick={addHighlight}
-              className="btn-secondary-action"
-              style={{ alignSelf: 'flex-start', marginTop: '0.25rem' }}
+              className="btn-secondary-action btn-add-field"
             >
               <FaPlus /> <span>Add Highlight</span>
             </button>
@@ -408,11 +406,10 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
 
         <div className="form-group" style={{ marginTop: '0.75rem' }}>
           <label>Technologies Used</label>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div className="tech-input-group">
             <input
               type="text"
-              className="form-input"
-              style={{ flex: 1 }}
+              className="form-input tech-text-input"
               value={techInput}
               onChange={(e) => setTechInput(e.target.value)}
               placeholder="Type technology (e.g. TypeScript) and press Add"
@@ -423,33 +420,20 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
                 }
               }}
             />
-            <button type="button" onClick={handleAddTech} className="btn-secondary-action">
+            <button type="button" onClick={handleAddTech} className="btn-secondary-action btn-add-tag">
               <FaPlus /> <span>Add Tag</span>
             </button>
           </div>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.75rem' }}>
+          <div className="tech-tags-list">
             {form.tech.map((tag) => (
-              <span
-                key={tag}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.4rem',
-                  padding: '0.25rem 0.65rem',
-                  borderRadius: 'var(--adm-radius-sm)',
-                  background: 'var(--adm-surface-elevated)',
-                  border: '1px solid var(--adm-border-medium)',
-                  fontSize: '0.75rem',
-                  color: 'var(--adm-text-primary)',
-                  fontFamily: 'var(--adm-font-mono)',
-                }}
-              >
+              <span key={tag} className="tech-tag-badge">
                 <span>{tag}</span>
                 <button
                   type="button"
                   onClick={() => removeTech(tag)}
-                  style={{ background: 'transparent', border: 'none', color: 'var(--adm-text-muted)', cursor: 'pointer' }}
+                  className="btn-remove-tag"
+                  aria-label={`Remove ${tag}`}
                 >
                   ✕
                 </button>
@@ -460,7 +444,7 @@ export default function ProjectForm({ initialData, onSubmit, isLoading }) {
       </div>
 
       {/* Form Action Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+      <div className="form-actions-bar">
         <button
           type="button"
           onClick={() => navigate('/admin/projects')}
