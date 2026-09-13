@@ -8,28 +8,27 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const { portfolioData } = usePortfolio();
 
-  const defaultProfile = {
-    engineer: "Karim Abbas Elashiry",
-    standing: "Level 04 CS Senior (HICIS 6th of Oct)",
-    role: "Backend Developer & Computer Science Senior",
-    stack: ["Node.js", "Express", "MySQL", "MongoDB"],
-    status: "Available for Engineering Roles",
+  const data = portfolioData?.profile || {};
+
+  // Explicitly select ONLY the five required fields from the dynamic backend profile
+  const profileConsole = {
+    engineer: data.engineer || data.name || "Karim Abbas Elashiry",
+    standing: data.standing || "Level 04 CS Senior (HICIS 6th of Oct)",
+    role: data.role || data.title || "Backend Developer & Computer Science Senior",
+    stack: Array.isArray(data.stack) && data.stack.length > 0
+      ? data.stack
+      : ["Node.js", "Express", "MySQL", "MongoDB"],
+    status: data.status === "Open for Backend Engineering Roles & Internships"
+      ? "Available for Engineering Roles"
+      : (data.status || "Available for Engineering Roles"),
   };
 
-  const profileData = portfolioData?.profile || defaultProfile;
-
-  const engineerName = profileData?.engineer || profileData?.name || "Karim Abbas Elashiry";
-  const roleTitle = profileData?.role || profileData?.title || "Backend Developer & Computer Science Senior";
-  const stackList = Array.isArray(profileData?.stack)
-    ? profileData.stack
-    : (profileData?.technical_core?.backend || ["Node.js", "Express", "MySQL", "MongoDB"]);
-
-  const nameParts = engineerName.split(" ");
+  const nameParts = profileConsole.engineer.split(" ");
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(" ");
 
   const handleCopyProfile = () => {
-    const profileJson = JSON.stringify(profileData, null, 2);
+    const profileJson = JSON.stringify(profileConsole, null, 2);
     navigator.clipboard.writeText(profileJson);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -74,7 +73,7 @@ export default function Home() {
                 {lastName}
               </span>
             </h1>
-            <p className="bio-role-subtitle">{roleTitle}</p>
+            <p className="bio-role-subtitle">{profileConsole.role}</p>
           </div>
 
           {/* 3. Concise 2-Sentence Bio */}
@@ -82,8 +81,8 @@ export default function Home() {
             Senior Computer Science student at the{" "}
             <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
             Building robust backend systems, scalable APIs, and data-driven
-            applications with {stackList.slice(0, -1).join(", ")}, and{" "}
-            {stackList[stackList.length - 1]} technologies.
+            applications with {profileConsole.stack.slice(0, -1).join(", ")}, and{" "}
+            {profileConsole.stack[profileConsole.stack.length - 1]} technologies.
           </p>
 
           {/* 4. Structured Architecture Highlights */}
@@ -143,7 +142,7 @@ export default function Home() {
                 <span
                   className="t-response"
                   dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(profileData, null, 2)
+                    __html: JSON.stringify(profileConsole, null, 2)
                       .replace(
                         /"([^"]+)":/g,
                         '<span class="t-key">"$1"</span>:',
