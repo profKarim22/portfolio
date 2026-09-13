@@ -5,6 +5,7 @@ import * as api from '../services/api';
 
 export default function AdminAuthModal() {
   const { isAuthOpen, setIsAuthOpen, setIsAdminOpen } = usePortfolio();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState('idle'); // idle | checking | denied | granted | locked
   const [errorMessage, setErrorMessage] = useState('');
@@ -51,6 +52,7 @@ export default function AdminAuthModal() {
 
   const handleClose = () => {
     setIsAuthOpen(false);
+    setEmail('');
     setPassword('');
     setErrorMessage('');
     setStatus('idle');
@@ -58,15 +60,13 @@ export default function AdminAuthModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (status === 'locked' || status === 'checking' || !password.trim()) return;
+    if (status === 'locked' || status === 'checking' || !email.trim() || !password.trim()) return;
 
     setStatus('checking');
     setErrorMessage('');
 
     try {
-      // We use a default admin email since the UI only asks for a passkey
-      const email = import.meta.env.VITE_ADMIN_EMAIL || 'admin@example.com';
-      await api.loginAdmin(email, password);
+      await api.loginAdmin(email.trim(), password);
       
       setStatus('granted');
       setTimeout(() => {
@@ -153,6 +153,25 @@ export default function AdminAuthModal() {
             <form className="auth-form" onSubmit={handleSubmit}>
               <label className="auth-label">
                 <span className="auth-prompt">root@karim:~$ </span>
+                admin_identity
+              </label>
+              <div className="auth-input-wrap mb-2">
+                <span className="auth-input-prefix">@</span>
+                <input
+                  type="email"
+                  className="auth-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin_email"
+                  disabled={status === 'checking' || status === 'granted'}
+                  autoComplete="email"
+                  spellCheck="false"
+                  required
+                />
+              </div>
+
+              <label className="auth-label">
+                <span className="auth-prompt">root@karim:~$ </span>
                 enter_passkey
               </label>
               <div className="auth-input-wrap">
@@ -165,14 +184,15 @@ export default function AdminAuthModal() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   disabled={status === 'checking' || status === 'granted'}
-                  autoComplete="off"
+                  autoComplete="current-password"
                   spellCheck="false"
+                  required
                 />
               </div>
               <button
                 type="submit"
                 className={`auth-submit ${status === 'checking' ? 'loading' : ''}`}
-                disabled={status === 'checking' || status === 'granted' || !password.trim()}
+                disabled={status === 'checking' || status === 'granted' || !email.trim() || !password.trim()}
               >
                 {status === 'checking' ? (
                   <><span className="auth-spinner" /> VERIFYING HASH...</>

@@ -27,9 +27,26 @@ export default function Home() {
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(" ");
 
+  const getFormattedProfileJson = () => {
+    const jsonStr = JSON.stringify(profileConsole, null, 2);
+    return jsonStr.replace(/\[\s*([\s\S]*?)\s*\]/g, (_, content) => {
+      return `[${content.split("\n").map((s) => s.trim()).join(" ")}]`;
+    });
+  };
+
+  const getHighlightedProfileHtml = () => {
+    const jsonStr = getFormattedProfileJson();
+    return jsonStr
+      .replace(/"([^"]+)":/g, '<span class="t-key">"$1"</span>:')
+      .replace(/: ("[^"]*")/g, ': <span class="t-string">$1</span>')
+      .replace(/\[(.*?)\]/g, (_, inner) => {
+        const highlighted = inner.replace(/"([^"]*)"/g, '<span class="t-string">"$1"</span>');
+        return `[${highlighted}]`;
+      });
+  };
+
   const handleCopyProfile = () => {
-    const profileJson = JSON.stringify(profileConsole, null, 2);
-    navigator.clipboard.writeText(profileJson);
+    navigator.clipboard.writeText(getFormattedProfileJson());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -142,19 +159,7 @@ export default function Home() {
                 <span
                   className="t-response"
                   dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(profileConsole, null, 2)
-                      .replace(
-                        /"([^"]+)":/g,
-                        '<span class="t-key">"$1"</span>:',
-                      )
-                      .replace(
-                        /: "([^"]+)"/g,
-                        ': <span class="t-string">"$1"</span>',
-                      )
-                      .replace(
-                        /\[(.*?)\]/g,
-                        '<span class="t-string">[$1]</span>',
-                      ),
+                    __html: getHighlightedProfileHtml(),
                   }}
                 />
               </code>

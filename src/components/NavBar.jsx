@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
 import "../styles/NavBar.css";
 
 export default function NavBar() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { setIsAuthOpen, portfolioData } = usePortfolio();
+  const { portfolioData } = usePortfolio();
 
   const statusConfig = portfolioData?.statusConfig;
   const currentMode = statusConfig?.modes?.[statusConfig?.mode] || statusConfig?.modes?.available;
@@ -41,8 +43,9 @@ export default function NavBar() {
       <div className="navbar-content">
         <div
           className="navbar-logo"
-          onClick={() => setIsAuthOpen(true)}
-          title="Admin Access"
+          onClick={() => navigate('/admin')}
+          title="Admin Control Panel"
+          style={{ cursor: 'pointer' }}
         >
           <span className="logo-bracket">&lt;</span>
           <span className="logo-text">Karim</span>
