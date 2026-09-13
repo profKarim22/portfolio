@@ -12,11 +12,11 @@ const PortfolioContext = createContext();
 
 export function PortfolioProvider({ children }) {
   const [portfolioData, setPortfolioData] = useState({
-    profile: null,
-    projects: [],
-    skills: null,
-    statusConfig: { mode: "online" },
-    apiEndpoints: {},
+    profile: defaultData.apiEndpoints?.profile || null,
+    projects: defaultData.projects || [],
+    skills: defaultData.apiEndpoints?.skills || null,
+    statusConfig: defaultData.statusConfig || { mode: "available", modes: {} },
+    apiEndpoints: defaultData.apiEndpoints || {},
   });
 
   const [loading, setLoading] = useState(true);
@@ -162,7 +162,7 @@ export function PortfolioProvider({ children }) {
 
       // Sync reorder to backend
       api
-        .reorderProjects(projects.map((p) => p._id || p.id))
+        .reorderProjects(projects.map((p) => p.id || p._id))
         .catch((err) => console.error("Failed to sync reorder", err));
 
       return { ...prev, projects };
@@ -186,7 +186,8 @@ export function PortfolioProvider({ children }) {
   // ── Status ──
   const updateStatus = useCallback(async (statusData) => {
     try {
-      const result = await api.updateStatus(statusData);
+      const payload = typeof statusData === 'string' ? { mode: statusData } : statusData;
+      const result = await api.updateStatus(payload);
       setPortfolioData((prev) => ({
         ...prev,
         statusConfig: result.data || result,

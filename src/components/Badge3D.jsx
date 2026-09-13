@@ -16,6 +16,26 @@ function createMassiveSkillBadgeTexture(photoImage) {
   canvas.width = 1024;
   canvas.height = 1536;
   const ctx = canvas.getContext("2d");
+  if (!ctx) return canvas;
+
+  // Polyfill roundRect for browsers/webviews that lack native canvas roundRect
+  if (!ctx.roundRect) {
+    ctx.roundRect = function (x, y, w, h, r) {
+      if (typeof r === "number") r = [r, r, r, r];
+      const [tl, tr, br, bl] = r || [0, 0, 0, 0];
+      this.moveTo(x + tl, y);
+      this.lineTo(x + w - tr, y);
+      this.quadraticCurveTo(x + w, y, x + w, y + tr);
+      this.lineTo(x + w, y + h - br);
+      this.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+      this.lineTo(x + bl, y + h);
+      this.quadraticCurveTo(x, y + h, x, y + h - bl);
+      this.lineTo(x + tl);
+      this.quadraticCurveTo(x, y, x + tl, y);
+      this.closePath();
+      return this;
+    };
+  }
 
   // 1. Deep Obsidian Slate Gradient Background
   const bgGrad = ctx.createLinearGradient(0, 0, 1024, 1536);
@@ -675,6 +695,87 @@ function BadgeScene({ isDraggingState, setIsDraggingState }) {
   );
 }
 
+class BadgeErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.warn("Badge3D WebGL Canvas could not initialize, falling back to 2D badge:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div
+          className="badge-fallback-card"
+          style={{
+            width: "320px",
+            height: "460px",
+            background: "linear-gradient(145deg, #070b14, #0d1527)",
+            border: "1px solid rgba(56, 189, 248, 0.3)",
+            borderRadius: "16px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+            color: "#e2e8f0",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "50%",
+              overflow: "hidden",
+              border: "2px solid #38bdf8",
+              marginBottom: "16px",
+            }}
+          >
+            <img
+              src="/karim_abbas.jpeg"
+              alt="Karim Abbas"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
+            />
+          </div>
+          <h3 style={{ margin: "0 0 6px 0", color: "#f8fafc", fontSize: "1.25rem" }}>
+            Karim Abbas Elashiry
+          </h3>
+          <p style={{ margin: "0 0 16px 0", color: "#38bdf8", fontSize: "0.85rem" }}>
+            Backend Developer & Computer Science Senior
+          </p>
+          <span
+            style={{
+              display: "inline-block",
+              background: "rgba(16, 185, 129, 0.15)",
+              color: "#10b981",
+              border: "1px solid rgba(16, 185, 129, 0.3)",
+              padding: "4px 12px",
+              borderRadius: "999px",
+              fontSize: "0.75rem",
+              fontWeight: "600",
+            }}
+          >
+            ● VERIFIED ENGINEER
+          </span>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 /**
  * Primary Export: Viewport-Bleed, Anti-Clipping 3D ID Badge Component
  */
@@ -697,32 +798,34 @@ export default function Badge3D() {
         cursor: isDraggingState ? "grabbing" : "grab",
       }}
     >
-      <Canvas
-        camera={{ position: [0, 0, 4.8], fov: 48 }}
-        dpr={[1, 1.5]}
-        gl={{
-          powerPreference: "high-performance",
-          antialias: true,
-          alpha: true,
-        }}
-        onCreated={({ gl }) => {
-          gl.setClearColor(0x000000, 0);
-          gl.setClearAlpha(0);
-        }}
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "transparent",
-          overflow: "visible",
-          pointerEvents: "auto",
-          touchAction: "pan-y",
-        }}
-      >
-        <BadgeScene
-          isDraggingState={isDraggingState}
-          setIsDraggingState={setIsDraggingState}
-        />
-      </Canvas>
+      <BadgeErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 0, 4.8], fov: 48 }}
+          dpr={[1, 1.5]}
+          gl={{
+            powerPreference: "high-performance",
+            antialias: true,
+            alpha: true,
+          }}
+          onCreated={({ gl }) => {
+            gl.setClearColor(0x000000, 0);
+            gl.setClearAlpha(0);
+          }}
+          style={{
+            width: "100%",
+            height: "100%",
+            background: "transparent",
+            overflow: "visible",
+            pointerEvents: "auto",
+            touchAction: "pan-y",
+          }}
+        >
+          <BadgeScene
+            isDraggingState={isDraggingState}
+            setIsDraggingState={setIsDraggingState}
+          />
+        </Canvas>
+      </BadgeErrorBoundary>
     </div>
   );
 }

@@ -83,7 +83,7 @@ export const reorderProjects = (orderedIds) => fetch(`${API_V1_URL}/admin/projec
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${getAuthToken()}` 
   },
-  body: JSON.stringify({ projectIds: orderedIds }),
+  body: JSON.stringify({ orderedIds, projectIds: orderedIds }),
 }).then(handleResponse);
 
 export const updateApiEndpoint = (key, data) => fetch(`${API_V1_URL}/admin/api-endpoints/${key}`, {
@@ -95,12 +95,15 @@ export const updateApiEndpoint = (key, data) => fetch(`${API_V1_URL}/admin/api-e
   body: JSON.stringify(data),
 }).then(handleResponse);
 
-export const updateStatus = (data) => fetch(`${API_V1_URL}/admin/status`, {
-  method: 'PUT',
-  headers: { 
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${getAuthToken()}` 
-  },
-  body: JSON.stringify(data),
-}).then(handleResponse);
+export const updateStatus = (data) => {
+  const payload = typeof data === 'string' ? { mode: data } : data;
+  return fetch(`${API_V1_URL}/admin/status`, {
+    method: 'PUT',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAuthToken()}` 
+    },
+    body: JSON.stringify(payload),
+  }).then(handleResponse);
+};
 
