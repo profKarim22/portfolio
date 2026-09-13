@@ -18,7 +18,8 @@
     "Segoe",
     "Catmull",
     "lerp",
-    "metalness"
+    "metalness",
+    "clearcoat"
   ],
   "files.watcherExclude": {
     "**/build/**": true
