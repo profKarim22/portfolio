@@ -29,20 +29,63 @@ export function PortfolioProvider({ children }) {
   const fetchAllData = useCallback(async () => {
     try {
       setLoading(true);
-      const [profileData, projectsData, skillsData, statusData] =
+      const [healthRes, profileRes, projectsRes, skillsRes, statusRes] =
         await Promise.all([
-          api.getProfile().catch(() => defaultData.apiEndpoints.profile),
-          api.getProjects().catch(() => defaultData.projects),
-          api.getSkills().catch(() => defaultData.apiEndpoints.skills),
-          api.getStatus().catch(() => defaultData.statusConfig),
+          api.getHealth().catch((err) => {
+            console.warn("Backend health check:", err.message);
+            return null;
+          }),
+          api.getProfile().catch((err) => {
+            console.warn("API /profile fetch failed:", err.message);
+            return null;
+          }),
+          api.getProjects().catch((err) => {
+            console.warn("API /projects fetch failed:", err.message);
+            return null;
+          }),
+          api.getSkills().catch((err) => {
+            console.warn("API /skills fetch failed:", err.message);
+            return null;
+          }),
+          api.getStatus().catch((err) => {
+            console.warn("API /status fetch failed:", err.message);
+            return null;
+          }),
         ]);
 
+      // Extract data safely per backend contract: { success: true, data: ... }
+      const apiProjects = projectsRes?.data !== undefined ? projectsRes.data : projectsRes;
+      const apiProfile = profileRes?.data !== undefined ? profileRes.data : profileRes;
+      const apiSkills = skillsRes?.data !== undefined ? skillsRes.data : skillsRes;
+      const apiStatus = statusRes?.data !== undefined ? statusRes.data : statusRes;
+
+      // Primary source is backend; fallback safely to defaultData if API returns empty/null
+      const finalProjects =
+        Array.isArray(apiProjects) && apiProjects.length > 0
+          ? apiProjects
+          : defaultData.projects;
+
+      const finalProfile =
+        apiProfile && typeof apiProfile === "object" && Object.keys(apiProfile).length > 0
+          ? apiProfile
+          : defaultData.apiEndpoints.profile;
+
+      const finalSkills =
+        apiSkills && typeof apiSkills === "object" && Object.keys(apiSkills).length > 0
+          ? apiSkills
+          : defaultData.apiEndpoints.skills;
+
+      const finalStatus =
+        apiStatus && typeof apiStatus === "object" && Object.keys(apiStatus).length > 0
+          ? apiStatus
+          : defaultData.statusConfig;
+
       setPortfolioData({
-        profile: profileData?.data || profileData || null,
-        projects: projectsData?.data || projectsData || [],
-        skills: skillsData?.data || skillsData || null,
-        statusConfig: statusData?.data || statusData || { mode: "online" },
-        apiEndpoints: {}, // Will be fetched on demand by ApiTerminal
+        profile: finalProfile,
+        projects: finalProjects,
+        skills: finalSkills,
+        statusConfig: finalStatus,
+        apiEndpoints: defaultData.apiEndpoints || {},
       });
       setError(null);
     } catch (err) {

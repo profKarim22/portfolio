@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { FaCopy, FaCheck } from "react-icons/fa";
 import { usePortfolio } from "../context/PortfolioContext";
+import * as api from "../services/api";
 import "../styles/ApiTerminal.css";
 
 // ============================================================================
@@ -32,9 +33,8 @@ function highlightJSON(obj) {
 // ============================================================================
 // 2. SLEEK & STREAMLINED API EXPLORER / TERMINAL COMPONENT
 // ============================================================================
-import * as api from '../services/api';
-
 export default function ApiTerminal() {
+  const { portfolioData } = usePortfolio();
   const [activeRoute, setActiveRoute] = useState("profile");
   const [copied, setCopied] = useState(false);
   const [activeData, setActiveData] = useState(null);
@@ -45,17 +45,34 @@ export default function ApiTerminal() {
 
   useEffect(() => {
     let isMounted = true;
-    
+
     const fetchEndpointData = async () => {
       setIsLoading(true);
       try {
-        const res = await api.getApiEndpoint(activeRoute);
+        let res;
+        if (activeRoute === "profile") res = await api.getProfile();
+        else if (activeRoute === "projects") res = await api.getProjects();
+        else if (activeRoute === "skills") res = await api.getSkills();
+        else if (activeRoute === "status") res = await api.getStatus();
+        else res = await api.getApiEndpoint(activeRoute);
+
+        const data = res?.data !== undefined ? res.data : res;
         if (isMounted) {
-          setActiveData(res.data || res);
+          if (data && (Array.isArray(data) ? data.length > 0 : Object.keys(data).length > 0)) {
+            setActiveData(data);
+          } else if (portfolioData?.apiEndpoints?.[activeRoute]) {
+            setActiveData(portfolioData.apiEndpoints[activeRoute]);
+          } else {
+            setActiveData(data);
+          }
         }
       } catch (err) {
         if (isMounted) {
-          setActiveData({ error: `Failed to fetch /api/v1/${activeRoute}`, details: err.message });
+          if (portfolioData?.apiEndpoints?.[activeRoute]) {
+            setActiveData(portfolioData.apiEndpoints[activeRoute]);
+          } else {
+            setActiveData({ error: `Failed to fetch /api/v1/${activeRoute}`, details: err.message });
+          }
         }
       } finally {
         if (isMounted) setIsLoading(false);
@@ -63,8 +80,10 @@ export default function ApiTerminal() {
     };
 
     fetchEndpointData();
-    return () => { isMounted = false; };
-  }, [activeRoute]);
+    return () => {
+      isMounted = false;
+    };
+  }, [activeRoute, portfolioData?.apiEndpoints]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(activeData, null, 2));

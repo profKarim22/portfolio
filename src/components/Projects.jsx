@@ -37,7 +37,7 @@ export default function Projects() {
                 className={`project-card glass-card ${
                   isFeatured ? "is-featured" : ""
                 }`}
-                key={project.id}
+                key={project._id || project.id || project.title}
                 style={{ "--domain-color": project.domainColor }}
               >
                 {/* Top Meta Bar */}

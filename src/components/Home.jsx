@@ -18,6 +18,16 @@ export default function Home() {
 
   const profileData = portfolioData?.profile || defaultProfile;
 
+  const engineerName = profileData?.engineer || profileData?.name || "Karim Abbas Elashiry";
+  const roleTitle = profileData?.role || profileData?.title || "Backend Developer & Computer Science Senior";
+  const stackList = Array.isArray(profileData?.stack)
+    ? profileData.stack
+    : (profileData?.technical_core?.backend || ["Node.js", "Express", "MySQL", "MongoDB"]);
+
+  const nameParts = engineerName.split(" ");
+  const firstName = nameParts[0];
+  const lastName = nameParts.slice(1).join(" ");
+
   const handleCopyProfile = () => {
     const profileJson = JSON.stringify(profileData, null, 2);
     navigator.clipboard.writeText(profileJson);
@@ -59,12 +69,12 @@ export default function Home() {
           {/* 2. Main Title */}
           <div className="bio-heading-group">
             <h1 className="bio-name">
-              {profileData.engineer.split(" ")[0]}{" "}
+              {firstName}{" "}
               <span className="text-accent">
-                {profileData.engineer.split(" ").slice(1).join(" ")}
+                {lastName}
               </span>
             </h1>
-            <p className="bio-role-subtitle">{profileData.role}</p>
+            <p className="bio-role-subtitle">{roleTitle}</p>
           </div>
 
           {/* 3. Concise 2-Sentence Bio */}
@@ -72,8 +82,8 @@ export default function Home() {
             Senior Computer Science student at the{" "}
             <strong>Higher Institute of CS &amp; IS, 6th of October</strong>.
             Building robust backend systems, scalable APIs, and data-driven
-            applications with {profileData.stack.slice(0, -1).join(", ")}, and{" "}
-            {profileData.stack[profileData.stack.length - 1]} technologies.
+            applications with {stackList.slice(0, -1).join(", ")}, and{" "}
+            {stackList[stackList.length - 1]} technologies.
           </p>
 
           {/* 4. Structured Architecture Highlights */}
