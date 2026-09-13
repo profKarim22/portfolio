@@ -11,7 +11,15 @@
     "glassmorphism",
     "WCAG",
     "rgba",
-    "offgrid"
+    "offgrid",
+    "VITE",
+    "topbar",
+    "drei",
+    "Segoe",
+    "Catmull",
+    "lerp",
+    "metalness",
+    "clearcoat"
   ],
   "files.watcherExclude": {
     "**/build/**": true

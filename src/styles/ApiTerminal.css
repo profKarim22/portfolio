@@ -251,8 +251,8 @@
   color: #38bdf8;
   overflow-x: auto;
   white-space: nowrap;
-  user-select: all;
   -webkit-user-select: all;
+  user-select: all;
 }
 
 .curl-dollar {
@@ -331,7 +331,6 @@
     flex-direction: row;
     overflow-x: auto;
     padding-bottom: 0.25rem;
-    -webkit-overflow-scrolling: touch;
   }
 
   .api-route-btn {
