@@ -7,6 +7,7 @@ export default function AdminAuthModal() {
   const { isAuthOpen, setIsAuthOpen, setIsAdminOpen } = usePortfolio();
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState('idle'); // idle | checking | denied | granted | locked
+  const [errorMessage, setErrorMessage] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [lockTimer, setLockTimer] = useState(0);
   const inputRef = useRef(null);
@@ -51,6 +52,7 @@ export default function AdminAuthModal() {
   const handleClose = () => {
     setIsAuthOpen(false);
     setPassword('');
+    setErrorMessage('');
     setStatus('idle');
   };
 
@@ -59,6 +61,7 @@ export default function AdminAuthModal() {
     if (status === 'locked' || status === 'checking' || !password.trim()) return;
 
     setStatus('checking');
+    setErrorMessage('');
 
     try {
       // We use a default admin email since the UI only asks for a passkey
@@ -70,12 +73,14 @@ export default function AdminAuthModal() {
         setIsAuthOpen(false);
         setIsAdminOpen(true);
         setPassword('');
+        setErrorMessage('');
         setStatus('idle');
         setAttempts(0);
       }, 1500);
     } catch (err) {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
+      setErrorMessage(err.message || '401 UNAUTHORIZED');
       setStatus('denied');
       setPassword('');
 
@@ -182,7 +187,7 @@ export default function AdminAuthModal() {
           {status === 'denied' && (
             <div className="auth-status auth-status-denied">
               <span className="status-icon">✖</span>
-              ACCESS DENIED // 401 UNAUTHORIZED
+              ACCESS DENIED // {errorMessage || '401 UNAUTHORIZED'}
               <span className="attempt-count">Attempt {attempts}/3</span>
             </div>
           )}

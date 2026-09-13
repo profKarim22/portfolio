@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
+import * as api from '../services/api';
 import '../styles/AdminDashboard.css';
 
 // ============================================================================
@@ -440,6 +441,22 @@ export default function AdminDashboard() {
     }
   }, [resetToDefault]);
 
+  // Verify authenticated session on open
+  useEffect(() => {
+    if (isAdminOpen) {
+      api.getMe().catch((err) => {
+        console.warn('Admin token invalid or expired:', err.message);
+        api.logoutAdmin();
+        setIsAdminOpen(false);
+      });
+    }
+  }, [isAdminOpen, setIsAdminOpen]);
+
+  const handleLogout = useCallback(() => {
+    api.logoutAdmin();
+    setIsAdminOpen(false);
+  }, [setIsAdminOpen]);
+
   const handleLivePreview = useCallback(() => {
     setIsAdminOpen(false);
     setTimeout(() => {
@@ -478,6 +495,25 @@ export default function AdminDashboard() {
               <span className="admin-session-dot" />
               AUTHENTICATED SESSION
             </span>
+            <button
+              className="admin-logout-btn"
+              onClick={handleLogout}
+              title="Logout from Admin Session"
+              type="button"
+              style={{
+                background: 'rgba(239, 68, 68, 0.15)',
+                border: '1px solid rgba(239, 68, 68, 0.4)',
+                color: '#ef4444',
+                borderRadius: '6px',
+                padding: '4px 10px',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              ⏻ Logout
+            </button>
             <button
               className="admin-close-btn"
               onClick={() => setIsAdminOpen(false)}
